@@ -11,35 +11,30 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Views\DrivingLessonsListPage.xaml">
+    <EmbeddedResource Update="Views\DrivingLessons\DrivingLessonsListPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\DrivingLessonsTabbedPage.xaml">
+    <EmbeddedResource Update="Views\DrivingLessons\DrivingLessonsTabbedPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\HistoryDrivingLessonsPage.xaml">
+    <EmbeddedResource Update="Views\DrivingLessons\HistoryDrivingLessonsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\MyLessonsPage.xaml">
+    <EmbeddedResource Update="Views\DrivingLessons\MyLessonsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\MyTrainingsPage.xaml">
+    <EmbeddedResource Update="Views\TrainingSessions\MyTrainingsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\TrainingSessionsListPage.xaml">
+    <EmbeddedResource Update="Views\TrainingSessions\TrainingSessionsListPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\TrainingSessionsResultsPage.xaml">
+    <EmbeddedResource Update="Views\TrainingSessions\TrainingSessionsResultsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\TrainingSessionsTabbedPage.xaml">
+    <EmbeddedResource Update="Views\TrainingSessions\TrainingSessionsTabbedPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ViewModels\DrivingLessons\" />
-    <Folder Include="ViewModels\TrainingSessions\" />
   </ItemGroup>
 
 </Project>

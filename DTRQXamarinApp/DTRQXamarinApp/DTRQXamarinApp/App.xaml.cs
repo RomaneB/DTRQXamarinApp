@@ -1,9 +1,13 @@
 ﻿using Prism;
 using Prism.Ioc;
-using DTRQXamarinApp.ViewModels;
-using DTRQXamarinApp.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using DTRQXamarinApp.ViewModels.TrainingSessions;
+using DTRQXamarinApp.ViewModels.DrivingLessons;
+using DTRQXamarinApp.Views.DrivingLessons;
+using DTRQXamarinApp.Views.TrainingSessions;
+using DTRQXamarinApp.Views;
+using DTRQXamarinApp.ViewModels;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace DTRQXamarinApp
@@ -30,14 +34,17 @@ namespace DTRQXamarinApp
         {
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
+
             containerRegistry.RegisterForNavigation<TrainingSessionsTabbedPage, TrainingSessionsTabbedPageViewModel>();
-            containerRegistry.RegisterForNavigation<DrivingLessonsTabbedPage, DrivingLessonsTabbedPageViewModel>();
+            containerRegistry.RegisterForNavigation<TrainingSessionsListPage, TrainingSessionsListPageViewModel>();
             containerRegistry.RegisterForNavigation<MyTrainingsPage, MyTrainingsPageViewModel>();
             containerRegistry.RegisterForNavigation<TrainingSessionsResultsPage, TrainingSessionsResultsPageViewModel>();
-            containerRegistry.RegisterForNavigation<TrainingSessionsListPage, TrainingSessionsListPageViewModel>();
+
+            containerRegistry.RegisterForNavigation<DrivingLessonsTabbedPage, DrivingLessonsTabbedPageViewModel>();
             containerRegistry.RegisterForNavigation<DrivingLessonsListPage, DrivingLessonsListPageViewModel>();
             containerRegistry.RegisterForNavigation<MyLessonsPage, MyLessonsPageViewModel>();
             containerRegistry.RegisterForNavigation<HistoryDrivingLessonsPage, HistoryDrivingLessonsPageViewModel>();
+
         }
     }
 }

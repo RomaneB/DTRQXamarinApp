@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DTRQXamarinApp.ViewModels
+namespace DTRQXamarinApp.ViewModels.DrivingLessons
 {
     public class DrivingLessonsTabbedPageViewModel : ViewModelBase
     {
