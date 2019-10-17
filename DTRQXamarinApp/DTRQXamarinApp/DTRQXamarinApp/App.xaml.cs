@@ -30,6 +30,14 @@ namespace DTRQXamarinApp
         {
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
+            containerRegistry.RegisterForNavigation<TrainingSessionsTabbedPage, TrainingSessionsTabbedPageViewModel>();
+            containerRegistry.RegisterForNavigation<DrivingLessonsTabbedPage, DrivingLessonsTabbedPageViewModel>();
+            containerRegistry.RegisterForNavigation<MyTrainingsPage, MyTrainingsPageViewModel>();
+            containerRegistry.RegisterForNavigation<TrainingSessionsResultsPage, TrainingSessionsResultsPageViewModel>();
+            containerRegistry.RegisterForNavigation<TrainingSessionsListPage, TrainingSessionsListPageViewModel>();
+            containerRegistry.RegisterForNavigation<DrivingLessonsListPage, DrivingLessonsListPageViewModel>();
+            containerRegistry.RegisterForNavigation<MyLessonsPage, MyLessonsPageViewModel>();
+            containerRegistry.RegisterForNavigation<HistoryDrivingLessonsPage, HistoryDrivingLessonsPageViewModel>();
         }
     }
 }

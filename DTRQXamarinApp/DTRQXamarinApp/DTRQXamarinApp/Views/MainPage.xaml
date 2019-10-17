@@ -4,6 +4,11 @@
              x:Class="DTRQXamarinApp.Views.MainPage"
              Title="{Binding Title}">
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="MenuTraining" Order="Secondary" Priority="0" Text="Sessions d'entrainements" Command="{Binding OpenTrainingSessionCommand}"/>
+        <ToolbarItem Name="MenuDriving" Order="Secondary" Priority="1" Text="Leçons de conduite" Command="{Binding OpenDrivingLessonCommand}" />
+    </ContentPage.ToolbarItems>
+    
     <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
         <Label Text="Welcome to Xamarin Forms and Prism!" />
     </StackLayout>
