@@ -2,9 +2,9 @@
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:prism="http://prismlibrary.com"
-            xmlns:local="clr-namespace:DTRQXamarinApp.Views;assembly=DTRQXamarinApp"
+            xmlns:local="clr-namespace:DTRQXamarinApp.Views.DrivingLessons;assembly=DTRQXamarinApp"
             prism:ViewModelLocator.AutowireViewModel="True"
-            x:Class="DTRQXamarinApp.Views.DrivingLessonsTabbedPage"
+            x:Class="DTRQXamarinApp.Views.DrivingLessons.DrivingLessonsTabbedPage"
             Title="{Binding Title}">
 
     <TabbedPage.Children>
