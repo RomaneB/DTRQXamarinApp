@@ -5,5 +5,23 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="DTRQXamarinApp.Views.TrainingSessions.MyTrainingsPage"
              Title="{Binding Title}">
-  
+
+    <ListView ItemsSource="{Binding Items}"  CachingStrategy="RecycleElement" SeparatorVisibility="Default">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <!--<ViewCell.ContextActions>
+                        <MenuItem Command="RegisterCommand" CommandParameter="{Binding .}"
+                                  Text="Register"/>
+                    </ViewCell.ContextActions>-->
+                    <StackLayout Orientation="Horizontal" Padding="3">
+                        <Label Text="{Binding Date}" FontAttributes="Bold" />
+                        <Label Text="{Binding AvailableSeat}" HorizontalOptions="EndAndExpand"/>
+                        <Button Command="{Binding RegisterCommand}" Text=" - Annuler "
+                                CommandParameter="Id"/>
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
 </ContentPage>

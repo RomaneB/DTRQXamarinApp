@@ -8,6 +8,7 @@ using DTRQXamarinApp.Views.DrivingLessons;
 using DTRQXamarinApp.Views.TrainingSessions;
 using DTRQXamarinApp.Views;
 using DTRQXamarinApp.ViewModels;
+using DTRQXamarinApp.Service;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace DTRQXamarinApp
@@ -26,7 +27,6 @@ namespace DTRQXamarinApp
         protected override async void OnInitialized()
         {
             InitializeComponent();
-
             await NavigationService.NavigateAsync("NavigationPage/MainPage");
         }
 

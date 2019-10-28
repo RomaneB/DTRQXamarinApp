@@ -1,6 +1,11 @@
 ﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using DTRQXamarinApp.Entities;
+using DTRQXamarinApp.IRepository;
+using DTRQXamarinApp.IService;
+using DTRQXamarinApp.Repository;
+using DTRQXamarinApp.Service;
 using Prism;
 using Prism.Ioc;
 
@@ -25,7 +30,12 @@ namespace DTRQXamarinApp.Droid
     {
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.Register(typeof(IRepository<>), typeof(Repository<>));
+
+            containerRegistry.Register(typeof(IService<TrainingSession>), typeof(TrainingSessionService));
+
             // Register any platform specific implementations
+            containerRegistry.Register<IDatabase, DatabaseConnectionAndroid>();
         }
     }
 }
