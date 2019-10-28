@@ -23,11 +23,6 @@ namespace DTRQXamarinApp.Service
             throw new NotImplementedException();
         }
 
-        public int ClearTable()
-        {
-            throw new NotImplementedException();
-        }
-
         public int Delete(int id)
         {
             throw new NotImplementedException();
@@ -40,7 +35,7 @@ namespace DTRQXamarinApp.Service
 
         public TrainingSession GetByid(int id)
         {
-            throw new NotImplementedException();
+            return TrainingSessionRepository.GetById(id);
         }
 
         public int Update(TrainingSession entity)
@@ -69,6 +64,15 @@ namespace DTRQXamarinApp.Service
             List<int> ids = lstUT.Where(t => t.UserId == userId).Select(t => t.TrainingSessionId).ToList();
             
             return lstT.Where(t => ids.Contains(t.Id)).Where(t=> t.Date < DateTime.Now).OrderByDescending(s => s.Date).ToList();
+        }
+
+        public int SaveRegister(int userId, int trainingSessionId)
+        {
+            return UserTrainingSessionRepository.Add(new UserTrainingSession()
+            {
+                UserId = userId,
+                TrainingSessionId = trainingSessionId
+            });
         }
     }
 }

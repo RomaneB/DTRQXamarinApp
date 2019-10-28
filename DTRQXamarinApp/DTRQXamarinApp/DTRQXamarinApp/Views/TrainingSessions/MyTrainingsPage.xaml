@@ -17,8 +17,10 @@
                     <StackLayout Orientation="Horizontal" Padding="3">
                         <Label Text="{Binding Date}" FontAttributes="Bold" />
                         <Label Text="{Binding AvailableSeat}" HorizontalOptions="EndAndExpand"/>
-                        <Button Command="{Binding RegisterCommand}" Text=" - Annuler "
-                                CommandParameter="Id"/>
+                        <Button Command="{Binding RegisterCommand}" Text=" SE DÉSINSCRIRE "
+                                CommandParameter="Id"
+                                BackgroundColor="#FFCC0000"
+                                TextColor="White"/>
                     </StackLayout>
                 </ViewCell>
             </DataTemplate>

@@ -6,19 +6,20 @@
              x:Class="DTRQXamarinApp.Views.TrainingSessions.TrainingSessionsListPage"
              Title="{Binding Title}">
     
-    <ListView ItemsSource="{Binding Items}"  CachingStrategy="RecycleElement" SeparatorVisibility="Default">
+    <ListView ItemsSource="{Binding Items}" x:Name="LstItems"  CachingStrategy="RecycleElement" SeparatorVisibility="Default">
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell>
-                    <!--<ViewCell.ContextActions>
-                        <MenuItem Command="RegisterCommand" CommandParameter="{Binding .}"
-                                  Text="Register"/>
-                    </ViewCell.ContextActions>-->
                     <StackLayout Orientation="Horizontal" Padding="3">
+                        <Label Text="Session : " FontAttributes="Bold" />
                         <Label Text="{Binding Date}" FontAttributes="Bold" />
+                        <!--<Image Source=" "/>-->
                         <Label Text="{Binding AvailableSeat}" HorizontalOptions="EndAndExpand"/>
-                        <Button Command="{Binding RegisterCommand}" Text=" + S'inscrire"
-                                CommandParameter="Id"/>
+                        <Button Text=" S'inscrire"
+                                Command="{Binding Path=BindingContext.Register, Source={x:Reference LstItems}}"
+                                CommandParameter="{Binding .}"
+                                BackgroundColor="#FF669900"
+                                TextColor="White"/>
                     </StackLayout>
                 </ViewCell>
             </DataTemplate>

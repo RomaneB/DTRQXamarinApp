@@ -1,6 +1,7 @@
 ﻿using DTRQXamarinApp.Entities;
 using DTRQXamarinApp.Service;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
 using Prism.Navigation;
 using System;
@@ -15,11 +16,20 @@ namespace DTRQXamarinApp.ViewModels.TrainingSessions
         public ObservableCollection<TrainingSession> Items { get; set; }
         public IEnumerable<TrainingSession> LstTrainingSession { get; set; }
 
-        public MyTrainingsPageViewModel(INavigationService navigationService, TrainingSessionService trainingSessionService)
+        public IEventAggregator Event { get; set; }
+
+        public MyTrainingsPageViewModel(INavigationService navigationService, TrainingSessionService trainingSessionService, IEventAggregator eventAggregator)
            : base(navigationService, trainingSessionService)
         {
             Title = "Mes sessions";
+            Event = eventAggregator;
+            Event.GetEvent<SentEvent>().Subscribe(IdReceived);
             InitializeItems();
+        }
+
+        private void IdReceived(int id)
+        {
+            Items.Add(TrainingSessionService.GetByid(id));
         }
 
         private void InitializeItems()
