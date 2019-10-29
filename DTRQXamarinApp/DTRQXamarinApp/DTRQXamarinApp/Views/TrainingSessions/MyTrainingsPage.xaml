@@ -6,20 +6,18 @@
              x:Class="DTRQXamarinApp.Views.TrainingSessions.MyTrainingsPage"
              Title="{Binding Title}">
 
-    <ListView ItemsSource="{Binding Items}"  CachingStrategy="RecycleElement" SeparatorVisibility="Default">
+    <ListView ItemsSource="{Binding Items}" x:Name="LstItems"  CachingStrategy="RecycleElement" SeparatorVisibility="Default">
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell>
-                    <!--<ViewCell.ContextActions>
-                        <MenuItem Command="RegisterCommand" CommandParameter="{Binding .}"
-                                  Text="Register"/>
-                    </ViewCell.ContextActions>-->
                     <StackLayout Orientation="Horizontal" Padding="3">
-                        <Label Text="{Binding Date}" FontAttributes="Bold" />
-                        <Label Text="{Binding AvailableSeat}" HorizontalOptions="EndAndExpand"/>
-                        <Button Command="{Binding RegisterCommand}" Text=" SE DÉSINSCRIRE "
-                                CommandParameter="Id"
+                        <Label Text="{Binding Date, StringFormat='{0:dd/MM/yyyy - HH:mm}'}" FontSize="Small" VerticalOptions="Center"/>
+                        <Label Text="{Binding AvailableSeat}" HorizontalOptions="End" FontSize="Small" VerticalOptions="Center"/>
+                        <Button Text=" Se désinscrire"
+                                Command="{Binding Path=BindingContext.Unregister, Source={x:Reference LstItems}}"
+                                CommandParameter="{Binding .}"
                                 BackgroundColor="#FFCC0000"
+                                HorizontalOptions="EndAndExpand"
                                 TextColor="White"/>
                     </StackLayout>
                 </ViewCell>

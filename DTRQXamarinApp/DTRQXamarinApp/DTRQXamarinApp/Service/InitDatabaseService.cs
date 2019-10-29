@@ -31,8 +31,7 @@ namespace DTRQXamarinApp.Service
                     db.CreateTable<TrainingSession>();
                     db.CreateTable<User>();
                     db.CreateTable<UserTrainingSession>();
-
-                    db.InsertAll(new List<TrainingSession>()
+                    var l = new List<TrainingSession>()
                 {
                     new TrainingSession {Date = new DateTime(2019,10,01,10,00,00), AvailableSeat=0},
                     new TrainingSession {Date = new DateTime(2019,10,01,8,00,00), AvailableSeat=5},
@@ -48,8 +47,14 @@ namespace DTRQXamarinApp.Service
                     new TrainingSession {Date = new DateTime(2019,10,20,08,00,00), AvailableSeat=8},
                     new TrainingSession {Date = new DateTime(2019,08,15,10,00,00), AvailableSeat=0},
                     new TrainingSession {Date = new DateTime(2019,08,15,12,00,00), AvailableSeat=8},
-                    new TrainingSession {Date = new DateTime(2020,01,01,15,00,00), AvailableSeat=15}
-                });
+                    new TrainingSession {Date = new DateTime(2020,03,01,15,00,00), AvailableSeat=15},
+                    new TrainingSession {Date = new DateTime(2020,03,01,15,30,00), AvailableSeat=15},
+                    new TrainingSession {Date = new DateTime(2019,12,10,15,00,00), AvailableSeat=15}
+                };
+
+                    DateTime d = new DateTime(2019, 10, 29, 10, 30, 00);
+                    var ds = d.ToShortDateString();
+                    db.InsertAll(l);
 
 
                     db.InsertAll(new List<User>()

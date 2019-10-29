@@ -9,6 +9,7 @@ using DTRQXamarinApp.Views.TrainingSessions;
 using DTRQXamarinApp.Views;
 using DTRQXamarinApp.ViewModels;
 using DTRQXamarinApp.Service;
+using System.Threading;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace DTRQXamarinApp

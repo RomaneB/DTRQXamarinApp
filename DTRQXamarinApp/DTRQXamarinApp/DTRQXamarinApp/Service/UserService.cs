@@ -33,7 +33,7 @@ namespace DTRQXamarinApp.Service
             throw new NotImplementedException();
         }
 
-        public int Update(User entity)
+        public User Update(User entity)
         {
             throw new NotImplementedException();
         }

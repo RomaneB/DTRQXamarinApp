@@ -12,37 +12,67 @@ namespace DTRQXamarinApp.Service
     {
         public IRepository<TrainingSession> TrainingSessionRepository { get; set; }
         public IRepository<UserTrainingSession> UserTrainingSessionRepository { get; set; }
+
         public TrainingSessionService(IRepository<TrainingSession> trainingSessionRepository, IRepository<UserTrainingSession> userTrainingSessionRepository)
         {
             TrainingSessionRepository = trainingSessionRepository;
             UserTrainingSessionRepository = userTrainingSessionRepository;
         }
 
+        /// <summary>
+        /// Add a training Session
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
         public int Add(TrainingSession entity)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Delete a training session
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public int Delete(int id)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Get all trainings sessions
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<TrainingSession> GetAll()
         {
             return TrainingSessionRepository.GetAll();
         }
 
+        /// <summary>
+        /// Get a training session
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public TrainingSession GetByid(int id)
         {
             return TrainingSessionRepository.GetById(id);
         }
 
-        public int Update(TrainingSession entity)
+        /// <summary>
+        /// Update a training session
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public TrainingSession Update(TrainingSession entity)
         {
-            throw new NotImplementedException();
+            return TrainingSessionRepository.Update(entity);
         }
 
+        /// <summary>
+        /// Get all training Sessions on which a user is registered
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public IEnumerable<TrainingSession> GetAllByUserId(int userId)
         {
             //Get All User Training
@@ -54,6 +84,11 @@ namespace DTRQXamarinApp.Service
             return lstT.Where(t => ids.Contains(t.Id)).Where(t=> t.Date >= DateTime.Now).OrderByDescending(s => s.Date).ToList();
         }
 
+        /// <summary>
+        /// Get all results of the training Session of a user (session passed)
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public IEnumerable<TrainingSession> GetResultsByUserId(int userId)
         {
             //Get All User Training
@@ -66,6 +101,32 @@ namespace DTRQXamarinApp.Service
             return lstT.Where(t => ids.Contains(t.Id)).Where(t=> t.Date < DateTime.Now).OrderByDescending(s => s.Date).ToList();
         }
 
+        /// <summary>
+        /// Get All available training Sessions for a user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public IEnumerable<TrainingSession> GetAllAvailable(int userId)
+        {
+            //Get all ids of the sessions
+            IEnumerable<int> lstAll = TrainingSessionRepository.GetAll().Where(t => t.Date > DateTime.Now).Select(t => t.Id);
+            //Get all ids of the sessions on which the user is registered
+            IEnumerable<int> lstAllByUser = this.GetAllByUserId(userId).Select(t => t.Id);
+
+            //Get all ids of the available sessions for the user
+            IEnumerable<int> ids = lstAll.Except(lstAllByUser);
+
+            //Returns sessions available for the user
+            return TrainingSessionRepository.GetAll().Where(t => ids.Contains(t.Id));
+
+        }
+
+        /// <summary>
+        /// Register a user on a training Session
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="trainingSessionId"></param>
+        /// <returns></returns>
         public int SaveRegister(int userId, int trainingSessionId)
         {
             return UserTrainingSessionRepository.Add(new UserTrainingSession()
@@ -73,6 +134,20 @@ namespace DTRQXamarinApp.Service
                 UserId = userId,
                 TrainingSessionId = trainingSessionId
             });
+        }
+
+        /// <summary>
+        /// Unregister a user on a training Session
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="trainingSessionId"></param>
+        /// <returns></returns>
+        public int SaveUnregister(int userId, int trainingSessionId)
+        {
+            var lst = UserTrainingSessionRepository.GetAll().Where(ut => ut.TrainingSessionId == trainingSessionId && ut.UserId == userId);
+             
+            var id = lst.Select(ut => ut.Id).FirstOrDefault();
+            return UserTrainingSessionRepository.Delete(id);
         }
     }
 }

@@ -11,10 +11,10 @@
             <DataTemplate>
                 <ViewCell>
                     <StackLayout Orientation="Horizontal" Padding="3">
-                        <Label Text="Session : " FontAttributes="Bold" />
-                        <Label Text="{Binding Date}" FontAttributes="Bold" />
-                        <!--<Image Source=" "/>-->
-                        <Label Text="{Binding AvailableSeat}" HorizontalOptions="EndAndExpand"/>
+                        <Label Text="{Binding Date, StringFormat='{0:dd/MM/yyyy - HH:mm}'}" FontSize="Small" VerticalOptions="Center"/>
+                            <Image Source="seat.png" HorizontalOptions="EndAndExpand"/>
+                            <Label Text="{Binding AvailableSeat}" HorizontalOptions="End" FontSize="Small" VerticalOptions="Center"/>
+                            <Image Source="unavailable.png" />
                         <Button Text=" S'inscrire"
                                 Command="{Binding Path=BindingContext.Register, Source={x:Reference LstItems}}"
                                 CommandParameter="{Binding .}"
