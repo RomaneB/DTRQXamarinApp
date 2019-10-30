@@ -6,7 +6,7 @@
              x:Class="DTRQXamarinApp.Views.TrainingSessions.MyTrainingsPage"
              Title="{Binding Title}">
 
-    <ListView ItemsSource="{Binding Items}" x:Name="LstItems"  CachingStrategy="RecycleElement" SeparatorVisibility="Default">
+    <ListView ItemsSource="{Binding Items}" x:Name="LstItems" SelectionMode="None" CachingStrategy="RecycleElement" SeparatorVisibility="Default">
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell>

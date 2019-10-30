@@ -1,5 +1,6 @@
 ﻿using DTRQXamarinApp.Entities;
 using DTRQXamarinApp.Service;
+using Plugin.LocalNotification;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
@@ -62,6 +63,12 @@ namespace DTRQXamarinApp.ViewModels.TrainingSessions
                         {
                             Items.Remove(obj);
                         }
+
+                        //Delete notifications
+                        var nIdHour = obj.Id + "2";
+                        var nIdDay = obj.Id + "4";
+                        NotificationCenter.Current.Cancel(int.Parse(nIdHour));
+                        NotificationCenter.Current.Cancel(int.Parse(nIdDay));
 
                         //Event publish to refresh the user's trainings list
                         Event.GetEvent<SentEventUnregister>().Publish(obj.Id);

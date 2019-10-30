@@ -61,25 +61,35 @@ namespace DTRQXamarinApp.ViewModels.TrainingSessions
 
                     //Register the user to the training Session in parameter
                     int add = TrainingSessionService.SaveRegister(userId, obj.Id);
-
-
+                    
                     if (add != 0)
                     {
+                        //Update the number of available seats
                         obj.AvailableSeat -= 1;
                         TrainingSessionService.Update(obj);
 
-                        ObservableCollection<TrainingSession> trainingSessions = new ObservableCollection<TrainingSession>(TrainingSessionService.GetAllAvailable(userId));
+                        //Remove the session into the available sessions for the user.
+                        ObservableCollection<TrainingSession> trainingSessions = new ObservableCollection<TrainingSession>(TrainingSessionService.GetAllByUserId(userId));
 
                         if (trainingSessions != null)
                         {
                             Items.Remove(obj);
                         }
 
+                        //Notification one day before
+                        DateTime dateDay = obj.Date.AddDays(-1);
+                        var nIdDay = obj.Id + "4";
+                        CreateNotification(nIdDay, dateDay, obj);
+
+                        //Notification one hour before
+                        DateTime dateHour = obj.Date.AddHours(-1);
+                        var nIdHour = obj.Id + "2";
+                        CreateNotification(nIdHour, dateHour,obj);
+
                         //Event publish to refresh the user's trainings list
                         Event.GetEvent<SentEvent>().Publish(obj.Id);
 
                         await Application.Current.MainPage.DisplayAlert("Validation", "Vous êtes désormais inscrit à la session du : " + obj.Date, "Ok");
-
                     }
                     else
                     {
@@ -92,7 +102,20 @@ namespace DTRQXamarinApp.ViewModels.TrainingSessions
 
                 throw;
             }
-        }     
+        }
+
+        private void CreateNotification(string id, DateTime date, TrainingSession obj)
+        {
+            var notification = new NotificationRequest
+            {
+                NotificationId = int.Parse(id),
+                Title = "Rappel - Session d'entrainement",
+                Description = "Attenttion, vous avez une leçon de conduite le "+ obj.Date.ToShortDateString()+" à " + obj.Date.Hour + "h" + obj.Date.Minute,
+                ReturningData = "Dummy data", // Returning data when tapped on notification.
+                NotifyTime = date
+            };
+            NotificationCenter.Current.Show(notification);
+        }
 
         private void InitializeItems()
         {
