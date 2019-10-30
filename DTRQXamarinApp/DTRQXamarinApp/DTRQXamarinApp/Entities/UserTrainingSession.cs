@@ -11,5 +11,6 @@ namespace DTRQXamarinApp.Entities
         public int Id { get; set; }
         public int UserId { get; set; }
         public int TrainingSessionId { get; set; }
+        public int Result { get; set; }
     }
 }

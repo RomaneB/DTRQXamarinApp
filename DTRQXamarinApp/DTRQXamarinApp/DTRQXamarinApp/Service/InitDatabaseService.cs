@@ -65,12 +65,12 @@ namespace DTRQXamarinApp.Service
                     new User{Username="Tiphaine", Password="admin"}
                 });
 
-                    db.Insert(new UserTrainingSession() { TrainingSessionId = 1, UserId = 1 });
-                    db.Insert(new UserTrainingSession() { TrainingSessionId = 5, UserId = 1 });
-                    db.Insert(new UserTrainingSession() { TrainingSessionId = 10, UserId = 1 });
-                    db.Insert(new UserTrainingSession() { TrainingSessionId = 4, UserId = 2 });
-                    db.Insert(new UserTrainingSession() { TrainingSessionId = 13, UserId = 1 });
-                    db.Insert(new UserTrainingSession() { TrainingSessionId = 1, UserId = 3 });
+                    db.Insert(new UserTrainingSession() { TrainingSessionId = 1, UserId = 1 , Result= 3});
+                    db.Insert(new UserTrainingSession() { TrainingSessionId = 5, UserId = 1 , Result= 5});
+                    db.Insert(new UserTrainingSession() { TrainingSessionId = 10, UserId = 1, Result= 9 });
+                    db.Insert(new UserTrainingSession() { TrainingSessionId = 4, UserId = 2, Result= 9 });
+                    db.Insert(new UserTrainingSession() { TrainingSessionId = 13, UserId = 1, Result= 10 });
+                    db.Insert(new UserTrainingSession() { TrainingSessionId = 1, UserId = 3, Result= 6});
 
                 }
             }

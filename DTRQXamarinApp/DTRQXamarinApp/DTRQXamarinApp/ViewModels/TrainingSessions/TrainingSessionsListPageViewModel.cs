@@ -32,7 +32,7 @@ namespace DTRQXamarinApp.ViewModels.TrainingSessions
         public TrainingSessionsListPageViewModel(TrainingSessionService trainingSessionService, INavigationService navigationService, IEventAggregator eventAggregator )
            : base(navigationService, trainingSessionService)
         {
-            Title = "Sessions disponibles";
+            Title = "Futures sessions";
             Register = new DelegateCommand<TrainingSession>(SaveRegister);
             Event = eventAggregator;
             Event.GetEvent<SentEventUnregister>().Subscribe(IdReceived);
