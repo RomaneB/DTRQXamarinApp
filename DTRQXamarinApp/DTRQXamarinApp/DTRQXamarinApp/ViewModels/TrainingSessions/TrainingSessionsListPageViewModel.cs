@@ -16,8 +16,7 @@ namespace DTRQXamarinApp.ViewModels.TrainingSessions
 {
     public class TrainingSessionsListPageViewModel : ViewModelBase
     {
-        public ObservableCollection<TrainingSession> Items { get; set; }
-        public IEnumerable<TrainingSession> LstTrainingSession { get; set; }
+        public ObservableCollection<TrainingSession> Items { get; set; }       
 
         public DelegateCommand<TrainingSession> Register { get; set; }
 
@@ -120,7 +119,7 @@ namespace DTRQXamarinApp.ViewModels.TrainingSessions
         private void InitializeItems()
         {
             //TODO Get UserId
-            LstTrainingSession = TrainingSessionService.GetAllAvailable(1);
+            IEnumerable<TrainingSession> LstTrainingSession = TrainingSessionService.GetAllAvailable(1);
             Items = new ObservableCollection<TrainingSession>(LstTrainingSession);
         }
     }

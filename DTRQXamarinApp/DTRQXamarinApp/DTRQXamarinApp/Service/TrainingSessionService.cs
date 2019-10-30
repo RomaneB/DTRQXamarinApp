@@ -1,6 +1,7 @@
 ﻿using DTRQXamarinApp.Entities;
 using DTRQXamarinApp.IRepository;
 using DTRQXamarinApp.IService;
+using DTRQXamarinApp.ViewModels.TrainingSessions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -89,16 +90,21 @@ namespace DTRQXamarinApp.Service
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public IEnumerable<TrainingSession> GetResultsByUserId(int userId)
+        public IEnumerable<ResultTrainingSessionViewModel> GetResultsByUserId(int userId)
         {
             //Get All User Training
-            IEnumerable<UserTrainingSession> lstUT = UserTrainingSessionRepository.GetAll();
-            //Get All Training
-            IEnumerable<TrainingSession> lstT = TrainingSessionRepository.GetAll();
-            //return gettAllbyuserid
-            List<int> ids = lstUT.Where(t => t.UserId == userId).Select(t => t.TrainingSessionId).ToList();
-            
-            return lstT.Where(t => ids.Contains(t.Id)).Where(t=> t.Date < DateTime.Now).OrderByDescending(s => s.Date).ToList();
+            IEnumerable<UserTrainingSession> lstUT = UserTrainingSessionRepository.GetAll().Where(ut => ut.UserId == userId);
+
+            List<ResultTrainingSessionViewModel> results = new List<ResultTrainingSessionViewModel>();
+            foreach (var item in lstUT)
+            {
+                TrainingSession t = TrainingSessionRepository.GetById(item.TrainingSessionId);
+                if (t.Date < DateTime.Now)
+                {
+                    results.Add(new ResultTrainingSessionViewModel(t, item.Result) {AvailableSeat = t.AvailableSeat, Date = t.Date, Id = t.Id, Result= item.Result });
+                }
+            }
+            return results.OrderByDescending(t=> t.Date);
         }
 
         /// <summary>

@@ -12,7 +12,6 @@
                 <ViewCell>
                     <StackLayout Orientation="Horizontal" Padding="3">
                         <Label Text="{Binding Date, StringFormat='{0:dd/MM/yyyy - HH:mm}'}" FontSize="Small" VerticalOptions="Center"/>
-                        <Label Text="{Binding AvailableSeat}" HorizontalOptions="End" FontSize="Small" VerticalOptions="Center"/>
                         <Button Text=" Se désinscrire"
                                 Command="{Binding Path=BindingContext.Unregister, Source={x:Reference LstItems}}"
                                 CommandParameter="{Binding .}"
