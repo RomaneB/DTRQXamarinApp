@@ -73,17 +73,7 @@ namespace DTRQXamarinApp.ViewModels.TrainingSessions
                         if (trainingSessions != null)
                         {
                             Items.Remove(obj);
-                        }
-
-                        //Notification one day before
-                        DateTime dateDay = obj.Date.AddDays(-1);
-                        var nIdDay = obj.Id + "4";
-                        CreateNotification(nIdDay, dateDay, obj);
-
-                        //Notification one hour before
-                        DateTime dateHour = obj.Date.AddHours(-1);
-                        var nIdHour = obj.Id + "2";
-                        CreateNotification(nIdHour, dateHour,obj);
+                        }                      
 
                         //Event publish to refresh the user's trainings list
                         Event.GetEvent<SentEvent>().Publish(obj.Id);
@@ -101,20 +91,7 @@ namespace DTRQXamarinApp.ViewModels.TrainingSessions
 
                 throw;
             }
-        }
-
-        private void CreateNotification(string id, DateTime date, TrainingSession obj)
-        {
-            var notification = new NotificationRequest
-            {
-                NotificationId = int.Parse(id),
-                Title = "Rappel - Session d'entrainement",
-                Description = "Attenttion, vous avez une leçon de conduite le "+ obj.Date.ToShortDateString()+" à " + obj.Date.Hour + "h" + obj.Date.Minute,
-                ReturningData = "Dummy data", // Returning data when tapped on notification.
-                NotifyTime = date
-            };
-            NotificationCenter.Current.Show(notification);
-        }
+        }        
 
         private void InitializeItems()
         {

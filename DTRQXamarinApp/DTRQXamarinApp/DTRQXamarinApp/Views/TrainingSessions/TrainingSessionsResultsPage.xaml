@@ -13,7 +13,7 @@
                     <StackLayout Orientation="Horizontal" Padding="3" VerticalOptions="Center">
                         <Label Text="{Binding Date, StringFormat='{0:dd/MM/yyyy - HH:mm}'}" FontSize="Small" />
                         <Label Text="Résultat : " FontSize="Small" HorizontalOptions="EndAndExpand" FontAttributes="Bold"/>
-                        <Label Text="{Binding Result}" FontSize="Small" TextColor="DarkRed" />
+                        <Label Text="{Binding Result}" FontSize="Small" TextColor="DarkRed" FontAttributes="Bold"/>
                         <Label Text="/10" FontSize="Small"/>
                     </StackLayout>
                 </ViewCell>

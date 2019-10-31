@@ -62,13 +62,7 @@ namespace DTRQXamarinApp.ViewModels.TrainingSessions
                         if (trainingSessions != null)
                         {
                             Items.Remove(obj);
-                        }
-
-                        //Delete notifications
-                        var nIdHour = obj.Id + "2";
-                        var nIdDay = obj.Id + "4";
-                        NotificationCenter.Current.Cancel(int.Parse(nIdHour));
-                        NotificationCenter.Current.Cancel(int.Parse(nIdDay));
+                        }                       
 
                         //Event publish to refresh the user's trainings list
                         Event.GetEvent<SentEventUnregister>().Publish(obj.Id);
