@@ -7,6 +7,7 @@
             x:Class="DTRQXamarinApp.Views.TrainingSessions.TrainingSessionsTabbedPage"
             Title="{Binding Title}">
 
+    
     <TabbedPage.Children>
         <local:TrainingSessionsListPage />
         <local:MyTrainingsPage />

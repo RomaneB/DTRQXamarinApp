@@ -5,5 +5,31 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="DTRQXamarinApp.Views.TrainingSessions.TrainingSessionsListPage"
              Title="{Binding Title}">
-  
+    <StackLayout>
+        <StackLayout HorizontalOptions="CenterAndExpand">
+            <Label Text="{Binding SwitchText}" VerticalOptions="CenterAndExpand"/>
+            <!--<Switch IsToggled="{Binding SwitchToggled}" HorizontalOptions="Center" VerticalOptions="CenterAndExpand"/>-->
+        </StackLayout>
+        
+        <ListView ItemsSource="{Binding Items}" x:Name="LstItems" SelectionMode="None" CachingStrategy="RecycleElement" SeparatorVisibility="Default">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Orientation="Horizontal" Padding="3">
+                            <Label Text="{Binding Date, StringFormat='{0:dd/MM/yyyy - HH:mm}'}" FontSize="Small" VerticalOptions="Center"/>
+                            <Image Source="seat.png" HorizontalOptions="EndAndExpand"/>
+                            <Label Text="{Binding AvailableSeat}" HorizontalOptions="End" FontSize="Small" VerticalOptions="Center"/>
+                            <Image Source="unavailable.png" />
+                            <Button Text=" S'inscrire"
+                                Command="{Binding Path=BindingContext.Register, Source={x:Reference LstItems}}"
+                                CommandParameter="{Binding .}"
+                                BackgroundColor="#FF669900"
+                                TextColor="White"/>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+    
 </ContentPage>

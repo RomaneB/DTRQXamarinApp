@@ -1,4 +1,5 @@
-﻿using Prism.Commands;
+﻿using DTRQXamarinApp.Service;
+using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
 using System;
@@ -15,13 +16,13 @@ namespace DTRQXamarinApp.ViewModels
         public DelegateCommand OpenTrainingSessionCommand { get; set; }
         public DelegateCommand OpenHomeCommand { get; set; }
 
-        public MainPageViewModel(INavigationService navigationService)
-            : base(navigationService)
+        public MainPageViewModel(INavigationService navigationService, InitDatabaseService databaseService )
+            : base(navigationService, databaseService)
         {
             Title = "Accueil";
             OpenDrivingLessonCommand = new DelegateCommand(OpenDrivingLesson);
             OpenTrainingSessionCommand = new DelegateCommand(OpenTrainingSession);
-
+            DatabaseService.InitDatabase();
         }
 
         private void OpenTrainingSession()
