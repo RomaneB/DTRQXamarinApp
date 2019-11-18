@@ -68,8 +68,7 @@ namespace DTRQXamarinApp.ViewModels.TrainingSessions
 
                 if (answer)
                 {
-                    //TODO Get UserId
-                    int userId = 1;
+                    int userId = int.Parse(Application.Current.Properties["UserId"].ToString());
 
                     //Register the user to the training Session in parameter
                     int add = TrainingSessionService.SaveRegister(userId, obj.Id);
@@ -108,8 +107,7 @@ namespace DTRQXamarinApp.ViewModels.TrainingSessions
 
         private void InitializeItems()
         {
-            //TODO Get UserId
-            IEnumerable<TrainingSession> LstTrainingSession = TrainingSessionService.GetAllAvailable(1);
+            IEnumerable<TrainingSession> LstTrainingSession = TrainingSessionService.GetAllAvailable(int.Parse(Application.Current.Properties["UserId"].ToString()));
             Items = new ObservableCollection<TrainingSession>(LstTrainingSession);
         }
     }

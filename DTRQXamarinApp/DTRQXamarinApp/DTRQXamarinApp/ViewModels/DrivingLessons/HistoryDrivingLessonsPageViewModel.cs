@@ -39,8 +39,7 @@ namespace DTRQXamarinApp.ViewModels.DrivingLessons
 
         private void InitializeItems()
         {
-            //TODO Get UserId
-            ListeDrivingLessons = DrivingLessonService.GetDrivingLessonsByUserId(1, false);
+            ListeDrivingLessons = DrivingLessonService.GetDrivingLessonsByUserId(int.Parse(Application.Current.Properties["UserId"].ToString()), false);
             Items = new ObservableCollection<DrivingLessonInstructor>(ListeDrivingLessons);
         }
     }
