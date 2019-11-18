@@ -19,7 +19,7 @@
                         <Button Command="{Binding Path=BindingContext.AnnulerLeconCommand, Source={x:Reference ListLessons}}"
                                         CommandParameter="{Binding .}"
                                         Text="Annuler"
-                                        BackgroundColor="#FF669900"
+                                        BackgroundColor="#FFCC0000"
                                         TextColor="White"/>
                     </StackLayout>
                 </ViewCell>

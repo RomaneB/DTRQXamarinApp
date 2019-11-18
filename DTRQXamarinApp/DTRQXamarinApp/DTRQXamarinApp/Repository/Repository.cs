@@ -42,10 +42,6 @@ namespace DTRQXamarinApp.Repository
             }
             
         }
-        //public TableQuery<T> AsQueryable()
-        //{
-        //    return _database.Table<T>();
-        //}
         public int Add(T entity)
         {
             try
@@ -90,22 +86,6 @@ namespace DTRQXamarinApp.Repository
             {
                 throw new Exception(e.ToString());
             }            
-        }
-        public bool ClearTable()
-        {
-            try
-            {
-                using (var db = DatabaseConnection.Connection())
-                {
-                    return db.DropTable<T>() == 1 && db.CreateTable<T>() == SQLite.CreateTableResult.Created;
-                }
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.ToString());
-            }
-
-            
         }
     }
 }
