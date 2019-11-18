@@ -28,9 +28,16 @@ namespace DTRQXamarinApp
         protected override async void OnInitialized()
         {
             InitializeComponent();
-            await NavigationService.NavigateAsync("NavigationPage/MainPage");
+            if (Application.Current.Properties.ContainsKey("UserId"))
+            {
+                await NavigationService.NavigateAsync("NavigationPage/MainPage");
+            }
+            else
+            {
+                await NavigationService.NavigateAsync("NavigationPage/LogPage");
+            }
         }
-
+        
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<NavigationPage>();
@@ -46,6 +53,7 @@ namespace DTRQXamarinApp
             containerRegistry.RegisterForNavigation<MyLessonsPage, MyLessonsPageViewModel>();
             containerRegistry.RegisterForNavigation<HistoryDrivingLessonsPage, HistoryDrivingLessonsPageViewModel>();
 
+            containerRegistry.RegisterForNavigation<LogPage, LogPageViewModel>();
         }
     }
 }

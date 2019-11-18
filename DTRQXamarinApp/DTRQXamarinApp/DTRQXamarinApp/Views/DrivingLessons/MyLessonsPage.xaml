@@ -5,5 +5,26 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="DTRQXamarinApp.Views.DrivingLessons.MyLessonsPage"
              Title="{Binding Title}">
-  
+
+    <ListView x:Name="ListLessons"
+            ItemsSource="{Binding Items}">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <StackLayout Orientation="Horizontal" Padding="3">
+                        <Label Text="{Binding DateTime, StringFormat='{0:dd/MM/yyyy - HH:mm}'}"
+                                    FontSize="Small" HorizontalOptions="CenterAndExpand"/>
+                        <Label Text="{Binding InstructorLastName}"
+                                     HorizontalOptions="StartAndExpand" FontSize="Small" VerticalOptions="Start" />
+                        <Button Command="{Binding Path=BindingContext.AnnulerLeconCommand, Source={x:Reference ListLessons}}"
+                                        CommandParameter="{Binding .}"
+                                        Text="Annuler"
+                                        BackgroundColor="#FFCC0000"
+                                        TextColor="White"/>
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+    
 </ContentPage>

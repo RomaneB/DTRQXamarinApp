@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="DTRQXamarinApp.Views.LogPage"
+             Title="{Binding Title}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+
+        <Image Source="login"
+                        HeightRequest="80"
+                        WidthRequest="80"
+                        HorizontalOptions="CenterAndExpand"
+                        Margin="0,25,0,0"
+                        Grid.Row="0"/>
+
+        <Label Text="Login"
+                        FontAttributes="Bold"
+                        TextColor="CornflowerBlue"
+                        HorizontalOptions="CenterAndExpand"
+                        FontSize="25"
+                        VerticalOptions="Center"
+                        Margin="0,25,0,0"
+                        Grid.Row="1"
+                        x:Name="welcomeText"/>
+
+
+
+        <Entry Text="{Binding UserName}" Placeholder="User" VerticalOptions="EndAndExpand" Grid.Row="2" />
+        <Entry Text="{Binding Password}" IsPassword="true" Placeholder="Password" VerticalOptions="StartAndExpand" Grid.Row="3" />
+        <Button Text="Submit" Margin="0,10,0,0" Command="{Binding LoginCommand}" Grid.Row="4" />
+    </Grid>
+
+</ContentPage>
