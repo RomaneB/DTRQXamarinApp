@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Xamarin.Forms;
 
 namespace DTRQXamarinApp.ViewModels.TrainingSessions
 {
@@ -25,7 +26,7 @@ namespace DTRQXamarinApp.ViewModels.TrainingSessions
 
         private void InitializeItems()
         {
-            IEnumerable<ResultTrainingSessionViewModel> LstTrainingSession = TrainingSessionService.GetResultsByUserId(1);
+            IEnumerable<ResultTrainingSessionViewModel> LstTrainingSession = TrainingSessionService.GetResultsByUserId(int.Parse(Application.Current.Properties["UserId"].ToString()));
             Items = new ObservableCollection<ResultTrainingSessionViewModel>(LstTrainingSession);
         }
     }
