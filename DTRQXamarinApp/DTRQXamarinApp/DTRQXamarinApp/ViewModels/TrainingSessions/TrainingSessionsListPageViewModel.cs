@@ -16,6 +16,17 @@ namespace DTRQXamarinApp.ViewModels.TrainingSessions
 {
     public class TrainingSessionsListPageViewModel : ViewModelBase
     {
+        public string SwitchText { get; set; }
+        public bool SwitchToggled { 
+            get {
+                return SwitchToggled; }
+            set {
+                if (true)
+                {
+
+                }
+            } 
+        }
         public ObservableCollection<TrainingSession> Items { get; set; }       
 
         public DelegateCommand<TrainingSession> Register { get; set; }
@@ -32,6 +43,8 @@ namespace DTRQXamarinApp.ViewModels.TrainingSessions
            : base(navigationService, trainingSessionService)
         {
             Title = "Futures sessions";
+            SwitchText = "Toutes les sessions";
+            //SwitchToggled = true;
             Register = new DelegateCommand<TrainingSession>(SaveRegister);
             Event = eventAggregator;
             Event.GetEvent<SentEventUnregister>().Subscribe(IdReceived);

@@ -35,6 +35,7 @@ namespace DTRQXamarinApp.ViewModels.TrainingSessions
         private void IdReceived(int id)
         {
             Items.Add(TrainingSessionService.GetByid(id));
+            Items.OrderBy(t => t.Date);
         }
 
         private async void SaveUnregister(TrainingSession obj)
