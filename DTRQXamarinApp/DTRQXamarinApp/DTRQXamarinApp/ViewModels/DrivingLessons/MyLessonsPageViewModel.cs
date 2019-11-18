@@ -8,6 +8,7 @@ using Prism.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Xamarin.Forms;
 
 namespace DTRQXamarinApp.ViewModels.DrivingLessons
@@ -35,6 +36,7 @@ namespace DTRQXamarinApp.ViewModels.DrivingLessons
         private void MessageReceived(int id)
         {
             Items.Add(DrivingLessonService.GetByIdWithInstructor(id));
+            Items.OrderBy(s => s.DateTime);
         }
 
         /// <summary>
