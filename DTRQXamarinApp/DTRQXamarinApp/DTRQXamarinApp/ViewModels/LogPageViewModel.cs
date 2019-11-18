@@ -30,12 +30,12 @@ namespace DTRQXamarinApp.ViewModels
         {
             Title = "LogPage";
             _ea = ea;
-            Application.Current.Properties.Clear();
             LoginCommand = new DelegateCommand(Login);
         }
 
         private void Login()
         {
+            Application.Current.Properties.Clear();
             Application.Current.Properties.Add("UserId", UserService.GetUserIdByUserAndPassword(UserName, Password));
 
             int userId = int.Parse(Application.Current.Properties["UserId"].ToString());

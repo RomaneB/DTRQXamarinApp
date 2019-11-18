@@ -70,7 +70,7 @@ namespace DTRQXamarinApp.Service
             return drivingLesson.Id;
         }
 
-        public IEnumerable<DrivingLessonInstructor> GetDrivingLessonsByUserId(int userId, bool dateFuture)
+        public IEnumerable<DrivingLessonInstructor> GetMyDrivingLessonsByUserId(int userId, bool dateFuture)
         {
             //Get All Driving lessons
             IEnumerable<DrivingLesson> lstDriving = DrivingLessonRepository.GetAll();
@@ -107,5 +107,28 @@ namespace DTRQXamarinApp.Service
             }
         }
 
+        public IEnumerable<DrivingLessonInstructor> GetDrivingLessonsByUserId(int userId)
+        {
+            //Get All Driving lessons
+            IEnumerable<DrivingLesson> lstDriving = DrivingLessonRepository.GetAll();
+            //Get All Instructor
+            IEnumerable<Instructor> lstInstructor = InstructorRepository.GetAll();
+
+            IEnumerable<DrivingLessonInstructor> drivingLessonInstructorsList = lstDriving.Join(lstInstructor, d => d.InstructorId, t => t.Id, (d, t) =>
+            new DrivingLessonInstructor
+            {
+                Text = d.Comment,
+                DateTime = d.Date,
+                DrivingLessonId = d.Id,
+                InstructorId = t.Id,
+                InstructorFirstName = t.FirstName,
+                InstructorLastName = t.LastName,
+                UserId = d.UserId
+            }).Where(w => w.UserId == 0 && w.DateTime > DateTime.Now).OrderBy(s => s.DateTime);
+
+            IEnumerable<string> lstMyDrivingLessons = lstDriving.Where(w => w.UserId == userId && w.Date > DateTime.Now).OrderBy(s => s.Date).Select(s => s.Date.ToLongTimeString()).ToList();
+
+            return drivingLessonInstructorsList.Where(x => !lstMyDrivingLessons.Contains(x.DateTime.ToLongTimeString()));
+        }
     }
 }

@@ -76,6 +76,7 @@ namespace DTRQXamarinApp.Service
                     db.Insert(new DrivingLesson() { Comment = "Premiere Lecon", Date = DateTime.Now.AddHours(1).AddMinutes(2), InstructorId = 1 });
                     db.Insert(new DrivingLesson() { Comment = "Seconde Lecon", Date = DateTime.Now.AddHours(1).AddMinutes(3), InstructorId = 2 });
                     db.Insert(new DrivingLesson() { Comment = "Troisième Lecon", Date = DateTime.Now.AddHours(1).AddMinutes(4), InstructorId = 1, UserId = 1 });
+                    db.Insert(new DrivingLesson() { Comment = "Lecon conduite", Date = DateTime.Now.AddHours(1).AddMinutes(5), InstructorId = 2 });
                     db.Insert(new DrivingLesson() { Comment = "Quatrième Lecon", Date = DateTime.Now.AddHours(1).AddMinutes(5), InstructorId = 2, UserId = 1 });
                     db.Insert(new DrivingLesson() { Comment = "Cinquième Lecon", Date = DateTime.Now.AddHours(1).AddMinutes(6), InstructorId = 1, UserId = 2 });
                     db.Insert(new DrivingLesson() { Comment = "Sixième Lecon", Date = DateTime.Now.AddHours(1).AddMinutes(4), InstructorId = 3 });
