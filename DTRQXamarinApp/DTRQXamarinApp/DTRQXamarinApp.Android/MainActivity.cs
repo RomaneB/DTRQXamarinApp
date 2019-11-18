@@ -1,6 +1,12 @@
 ﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using DTRQXamarinApp.Entities;
+using DTRQXamarinApp.IRepository;
+using DTRQXamarinApp.IService;
+using DTRQXamarinApp.Repository;
+using DTRQXamarinApp.Service;
+using Plugin.LocalNotification;
 using Prism;
 using Prism.Ioc;
 
@@ -11,13 +17,17 @@ namespace DTRQXamarinApp.Droid
     {
         protected override void OnCreate(Bundle bundle)
         {
+            NotificationCenter.CreateNotificationChannel();
+
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
-
+            
             base.OnCreate(bundle);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new App(new AndroidInitializer()));
+
+            NotificationCenter.NotifyNotificationTapped(Intent);
         }
     }
 
@@ -25,7 +35,12 @@ namespace DTRQXamarinApp.Droid
     {
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.Register(typeof(IRepository<>), typeof(Repository<>));
+
+            containerRegistry.Register(typeof(IService<TrainingSession>), typeof(TrainingSessionService));
+
             // Register any platform specific implementations
+            containerRegistry.Register<IDatabase, DatabaseConnectionAndroid>();
         }
     }
 }

@@ -8,9 +8,13 @@
         <ToolbarItem Name="MenuTraining" Order="Secondary" Priority="0" Text="Sessions d'entrainements" Command="{Binding OpenTrainingSessionCommand}"/>
         <ToolbarItem Name="MenuDriving" Order="Secondary" Priority="1" Text="Leçons de conduite" Command="{Binding OpenDrivingLessonCommand}" />
     </ContentPage.ToolbarItems>
-    
-    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-        <Label Text="Welcome to Xamarin Forms and Prism!" />
+
+    <StackLayout HorizontalOptions="CenterAndExpand">
+        <Image Source="drivingSchool.jpg" HorizontalOptions="Center"/>
+        <Label Text="Bienvenue dans notre école de conduite DTRQ ! " HorizontalOptions="Center" FontAttributes="Bold"/>
+        <Button Text="Leçons de conduite" Image="drivinglessons.png" Command="{Binding OpenDrivingLessonCommand}"/>
+        <Button Text="Sessions d'entrainement" Image="trainingsessions.png" Command="{Binding OpenTrainingSessionCommand}"/>       
+
     </StackLayout>
 
 </ContentPage>

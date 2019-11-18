@@ -5,5 +5,22 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="DTRQXamarinApp.Views.TrainingSessions.MyTrainingsPage"
              Title="{Binding Title}">
-  
+
+    <ListView ItemsSource="{Binding Items}" x:Name="LstItems" SelectionMode="None" CachingStrategy="RecycleElement" SeparatorVisibility="Default">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <StackLayout Orientation="Horizontal" Padding="3">
+                        <Label Text="{Binding Date, StringFormat='{0:dd/MM/yyyy - HH:mm}'}" FontSize="Small" VerticalOptions="Center"/>
+                        <Button Text=" Se désinscrire"
+                                Command="{Binding Path=BindingContext.Unregister, Source={x:Reference LstItems}}"
+                                CommandParameter="{Binding .}"
+                                BackgroundColor="#FFCC0000"
+                                HorizontalOptions="EndAndExpand"
+                                TextColor="White"/>
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
 </ContentPage>
