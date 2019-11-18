@@ -13,5 +13,15 @@ namespace DTRQXamarinApp.Views
         {
             InitializeComponent();
         }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+        }
+
+        protected override bool OnBackButtonPressed()
+        {
+            return true;
+        }
     }
 }

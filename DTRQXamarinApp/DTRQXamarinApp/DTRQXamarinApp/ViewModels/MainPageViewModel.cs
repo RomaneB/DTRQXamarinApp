@@ -15,6 +15,7 @@ namespace DTRQXamarinApp.ViewModels
         public DelegateCommand OpenDrivingLessonCommand { get; set; }
         public DelegateCommand OpenTrainingSessionCommand { get; set; }
         public DelegateCommand OpenHomeCommand { get; set; }
+        public DelegateCommand DeconnexionCommand { get; set; }
 
         public MainPageViewModel(INavigationService navigationService, InitDatabaseService databaseService )
             : base(navigationService, databaseService)
@@ -22,6 +23,7 @@ namespace DTRQXamarinApp.ViewModels
             Title = "Accueil";
             OpenDrivingLessonCommand = new DelegateCommand(OpenDrivingLesson);
             OpenTrainingSessionCommand = new DelegateCommand(OpenTrainingSession);
+            DeconnexionCommand = new DelegateCommand(Deconnexion);
             DatabaseService.InitDatabase();
         }
 
@@ -33,6 +35,11 @@ namespace DTRQXamarinApp.ViewModels
         private void OpenDrivingLesson()
         {
             NavigationService.NavigateAsync("DrivingLessonsTabbedPage");
+        }
+
+        private void Deconnexion()
+        {
+            NavigationService.NavigateAsync("/LogPage", useModalNavigation: true);
         }
     }
 }

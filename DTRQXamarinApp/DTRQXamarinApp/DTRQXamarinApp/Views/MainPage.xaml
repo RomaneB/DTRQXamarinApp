@@ -7,6 +7,7 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Name="MenuTraining" Order="Secondary" Priority="0" Text="Sessions d'entrainements" Command="{Binding OpenTrainingSessionCommand}"/>
         <ToolbarItem Name="MenuDriving" Order="Secondary" Priority="1" Text="Leçons de conduite" Command="{Binding OpenDrivingLessonCommand}" />
+        <ToolbarItem Name="MenuDriving" Order="Secondary" Priority="1" Text="Déconnexion" Command="{Binding DeconnexionCommand}" />
     </ContentPage.ToolbarItems>
 
     <StackLayout HorizontalOptions="CenterAndExpand">
