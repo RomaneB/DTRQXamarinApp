@@ -46,6 +46,7 @@ namespace DTRQXamarinApp
             containerRegistry.RegisterForNavigation<MyLessonsPage, MyLessonsPageViewModel>();
             containerRegistry.RegisterForNavigation<HistoryDrivingLessonsPage, HistoryDrivingLessonsPageViewModel>();
 
+            //containerRegistry.RegisterForNavigation<LogPage, LogPageViewModel>();
         }
     }
 }

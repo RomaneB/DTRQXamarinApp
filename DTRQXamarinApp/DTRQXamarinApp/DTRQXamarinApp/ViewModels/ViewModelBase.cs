@@ -14,6 +14,7 @@ namespace DTRQXamarinApp.ViewModels
     {
         protected INavigationService NavigationService { get; private set; }
         public TrainingSessionService TrainingSessionService { get; set; }
+        public DrivingLessonService DrivingLessonService { get; set; }
         public InitDatabaseService DatabaseService { get; set; }
 
         private string _title;
@@ -31,6 +32,12 @@ namespace DTRQXamarinApp.ViewModels
         {
             NavigationService = navigationService;
             TrainingSessionService = trainingSessionService;
+        }
+
+        public ViewModelBase(INavigationService navigationService, DrivingLessonService drivingLessonService)
+        {
+            NavigationService = navigationService;
+            DrivingLessonService = drivingLessonService;
         }
 
         public ViewModelBase(INavigationService navigationService, InitDatabaseService databaseService)
