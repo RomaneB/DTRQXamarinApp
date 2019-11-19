@@ -46,66 +46,118 @@ namespace DTRQXamarinApp.Service
 
         public DrivingLessonInstructor GetByIdWithInstructor(int id)
         {
-            DrivingLesson drivingLesson = DrivingLessonRepository.GetById(id);
-            Instructor instructor = InstructorRepository.GetById(drivingLesson.InstructorId);
-
-            return new DrivingLessonInstructor
+            try
             {
-                Text = drivingLesson.Comment,
-                DateTime = drivingLesson.Date,
-                DrivingLessonId = drivingLesson.Id,
-                InstructorId = instructor.Id,
-                InstructorFirstName = instructor.FirstName,
-                InstructorLastName = instructor.LastName,
-                UserId = drivingLesson.UserId
-            };
+                DrivingLesson drivingLesson = DrivingLessonRepository.GetById(id);
+                Instructor instructor = InstructorRepository.GetById(drivingLesson.InstructorId);
+
+                return new DrivingLessonInstructor
+                {
+                    Text = drivingLesson.Comment,
+                    DateTime = drivingLesson.Date,
+                    DrivingLessonId = drivingLesson.Id,
+                    InstructorId = instructor.Id,
+                    InstructorFirstName = instructor.FirstName,
+                    InstructorLastName = instructor.LastName,
+                    UserId = drivingLesson.UserId
+                };
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
         public int UpdateUserIdForDrivingLesson(int id, int userId)
         {
-            DrivingLesson drivingLesson = DrivingLessonRepository.GetById(id);
-            drivingLesson.UserId = userId;
-            DrivingLessonRepository.Update(drivingLesson);
+            try
+            {
+                DrivingLesson drivingLesson = DrivingLessonRepository.GetById(id);
+                drivingLesson.UserId = userId;
+                DrivingLessonRepository.Update(drivingLesson);
 
-            return drivingLesson.Id;
+                return drivingLesson.Id;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+           
         }
 
-        public IEnumerable<DrivingLessonInstructor> GetDrivingLessonsByUserId(int userId, bool dateFuture)
+        public IEnumerable<DrivingLessonInstructor> GetMyDrivingLessonsByUserId(int userId, bool dateFuture)
         {
-            //Get All Driving lessons
-            IEnumerable<DrivingLesson> lstDriving = DrivingLessonRepository.GetAll();
-            //Get All Instructor
-            IEnumerable<Instructor> lstInstructor = InstructorRepository.GetAll();
+            try
+            {
+                //Get All Driving lessons
+                IEnumerable<DrivingLesson> lstDriving = DrivingLessonRepository.GetAll();
+                //Get All Instructor
+                IEnumerable<Instructor> lstInstructor = InstructorRepository.GetAll();
 
-            if (dateFuture)
-            {
-                return lstDriving.Join(lstInstructor, d => d.InstructorId, t => t.Id, (d, t) =>
-                new DrivingLessonInstructor
+                if (dateFuture)
                 {
-                    Text = d.Comment,
-                    DateTime = d.Date,
-                    DrivingLessonId = d.Id,
-                    InstructorId = t.Id,
-                    InstructorFirstName = t.FirstName,
-                    InstructorLastName = t.LastName,
-                    UserId = d.UserId
-                }).Where(w => w.UserId == userId && w.DateTime > DateTime.Now).OrderBy(s => s.DateTime);
-            }
-            else
-            {
-                return lstDriving.Join(lstInstructor, d => d.InstructorId, t => t.Id, (d, t) =>
-                new DrivingLessonInstructor
+                    return lstDriving.Join(lstInstructor, d => d.InstructorId, t => t.Id, (d, t) =>
+                    new DrivingLessonInstructor
+                    {
+                        Text = d.Comment,
+                        DateTime = d.Date,
+                        DrivingLessonId = d.Id,
+                        InstructorId = t.Id,
+                        InstructorFirstName = t.FirstName,
+                        InstructorLastName = t.LastName,
+                        UserId = d.UserId
+                    }).Where(w => w.UserId == userId && w.DateTime > DateTime.Now).OrderBy(s => s.DateTime);
+                }
+                else
                 {
-                    Text = d.Comment,
-                    DateTime = d.Date,
-                    DrivingLessonId = d.Id,
-                    InstructorId = t.Id,
-                    InstructorFirstName = t.FirstName,
-                    InstructorLastName = t.LastName,
-                    UserId = d.UserId
-                }).Where(w => w.UserId == userId && w.DateTime <= DateTime.Now).OrderBy(s => s.DateTime);
+                    return lstDriving.Join(lstInstructor, d => d.InstructorId, t => t.Id, (d, t) =>
+                    new DrivingLessonInstructor
+                    {
+                        Text = d.Comment,
+                        DateTime = d.Date,
+                        DrivingLessonId = d.Id,
+                        InstructorId = t.Id,
+                        InstructorFirstName = t.FirstName,
+                        InstructorLastName = t.LastName,
+                        UserId = d.UserId
+                    }).Where(w => w.UserId == userId && w.DateTime <= DateTime.Now).OrderBy(s => s.DateTime);
+                }
             }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }           
         }
 
+        public IEnumerable<DrivingLessonInstructor> GetDrivingLessonsByUserId(int userId)
+        {
+            try
+            {
+                //Get All Driving lessons
+                IEnumerable<DrivingLesson> lstDriving = DrivingLessonRepository.GetAll();
+                //Get All Instructor
+                IEnumerable<Instructor> lstInstructor = InstructorRepository.GetAll();
+
+                IEnumerable<DrivingLessonInstructor> drivingLessonInstructorsList = lstDriving.Join(lstInstructor, d => d.InstructorId, t => t.Id, (d, t) =>
+                new DrivingLessonInstructor
+                {
+                    Text = d.Comment,
+                    DateTime = d.Date,
+                    DrivingLessonId = d.Id,
+                    InstructorId = t.Id,
+                    InstructorFirstName = t.FirstName,
+                    InstructorLastName = t.LastName,
+                    UserId = d.UserId
+                }).Where(w => w.UserId == 0 && w.DateTime > DateTime.Now).OrderBy(s => s.DateTime);
+
+                IEnumerable<string> lstMyDrivingLessons = lstDriving.Where(w => w.UserId == userId && w.Date > DateTime.Now).OrderBy(s => s.Date).Select(s => s.Date.ToLongTimeString()).ToList();
+
+                return drivingLessonInstructorsList.Where(x => !lstMyDrivingLessons.Contains(x.DateTime.ToLongTimeString()));
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
     }
 }

@@ -43,8 +43,16 @@ namespace DTRQXamarinApp.Service
 
         public int GetUserIdByUserAndPassword(string user, string password)
         {
-            IEnumerable<User> lstUsers = UserRepository.GetAll();
-            return lstUsers.Where(s => s.Username == user && s.Password == password).Select(s => s.Id).FirstOrDefault();
+            try
+            {
+                IEnumerable<User> lstUsers = UserRepository.GetAll();
+                return lstUsers.Where(s => s.Username == user && s.Password == password).Select(s => s.Id).FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(e.Message);
+            }
         }
     }
 }

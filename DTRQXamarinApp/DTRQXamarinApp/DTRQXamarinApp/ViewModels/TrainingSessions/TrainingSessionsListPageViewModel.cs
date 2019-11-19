@@ -1,4 +1,5 @@
 ﻿using DTRQXamarinApp.Entities;
+using DTRQXamarinApp.Event;
 using DTRQXamarinApp.IService;
 using DTRQXamarinApp.Service;
 using Plugin.LocalNotification;
@@ -54,6 +55,13 @@ namespace DTRQXamarinApp.ViewModels.TrainingSessions
         private void IdReceived(int obj)
         {
             Items.Add(TrainingSessionService.GetByid(obj));
+            List<TrainingSession> trainingSessions = Items.OrderBy(s => s.Date).ToList();
+            Items.Clear();
+
+            foreach (TrainingSession item in trainingSessions)
+            {
+                Items.Add(item);
+            }
         }
 
         /// <summary>
@@ -100,14 +108,13 @@ namespace DTRQXamarinApp.ViewModels.TrainingSessions
             }
             catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }        
 
         private void InitializeItems()
         {
-            IEnumerable<TrainingSession> LstTrainingSession = TrainingSessionService.GetAllAvailable(int.Parse(Application.Current.Properties["UserId"].ToString()));
+            IEnumerable<TrainingSession> LstTrainingSession = TrainingSessionService.GetAllAvailable(int.Parse(Application.Current.Properties["UserId"].ToString())).OrderBy(s=> s.Date);
             Items = new ObservableCollection<TrainingSession>(LstTrainingSession);
         }
     }

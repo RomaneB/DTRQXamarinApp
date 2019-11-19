@@ -10,6 +10,10 @@ using DTRQXamarinApp.Views;
 using DTRQXamarinApp.ViewModels;
 using DTRQXamarinApp.Service;
 using System.Threading;
+using DTRQXamarinApp.IRepository;
+using DTRQXamarinApp.Repository;
+using DTRQXamarinApp.Entities;
+using DTRQXamarinApp.IService;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace DTRQXamarinApp
@@ -54,6 +58,14 @@ namespace DTRQXamarinApp
             containerRegistry.RegisterForNavigation<HistoryDrivingLessonsPage, HistoryDrivingLessonsPageViewModel>();
 
             containerRegistry.RegisterForNavigation<LogPage, LogPageViewModel>();
+
+            //Repository
+            containerRegistry.Register(typeof(IRepository<>), typeof(Repository<>));
+
+            //Service
+            containerRegistry.Register(typeof(IService<TrainingSession>), typeof(TrainingSessionService));
+            containerRegistry.Register(typeof(IService<DrivingLesson>), typeof(DrivingLessonService));
         }
+
     }
 }

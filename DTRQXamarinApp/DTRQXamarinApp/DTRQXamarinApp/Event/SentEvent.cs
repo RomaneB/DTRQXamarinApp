@@ -1,6 +1,6 @@
 ﻿using Prism.Events;
 
-namespace DTRQXamarinApp
+namespace DTRQXamarinApp.Event
 {
     public class SentEvent : PubSubEvent<int>
     {
