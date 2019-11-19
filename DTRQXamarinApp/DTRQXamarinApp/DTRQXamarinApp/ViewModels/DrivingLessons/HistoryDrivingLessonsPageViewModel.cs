@@ -16,6 +16,11 @@ namespace DTRQXamarinApp.ViewModels.DrivingLessons
         public IEnumerable<DrivingLessonInstructor> ListeDrivingLessons { get; set; }
         public ObservableCollection<DrivingLessonInstructor> Items { get; set; }
         public DelegateCommand<DrivingLessonInstructor> CommentLessonCommand { get; set; }
+        /// <summary>
+        /// Constructor of the viewModel
+        /// </summary>
+        /// <param name="navigationService"></param>
+        /// <param name="drivingLessonService"></param>
         public HistoryDrivingLessonsPageViewModel(INavigationService navigationService, DrivingLessonService drivingLessonService)
            : base(navigationService, drivingLessonService)
         {
@@ -25,7 +30,7 @@ namespace DTRQXamarinApp.ViewModels.DrivingLessons
         }
 
         /// <summary>
-        /// Permet de voir les informations sur une leçon passée
+        /// View information about a past lesson
         /// </summary>
         /// <param name="drivingLesson_Instructor"></param>
         private void CommentLesson(DrivingLessonInstructor drivingLessonInstructor)
@@ -37,9 +42,9 @@ namespace DTRQXamarinApp.ViewModels.DrivingLessons
             }
         }
 
+        // Initialization of datas into table
         private void InitializeItems()
         {
-
             ListeDrivingLessons = DrivingLessonService.GetMyDrivingLessonsByUserId(int.Parse(Application.Current.Properties["UserId"].ToString()), false); 
             Items = new ObservableCollection<DrivingLessonInstructor>(ListeDrivingLessons);
         }
