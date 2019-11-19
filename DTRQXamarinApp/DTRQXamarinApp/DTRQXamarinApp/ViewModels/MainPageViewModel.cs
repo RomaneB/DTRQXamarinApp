@@ -1,4 +1,5 @@
 ﻿using DTRQXamarinApp.Service;
+using Plugin.LocalNotification;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
@@ -39,6 +40,7 @@ namespace DTRQXamarinApp.ViewModels
 
         private void Deconnexion()
         {
+            NotificationCenter.Current.CancelAll();
             NavigationService.NavigateAsync("/LogPage", useModalNavigation: true);
         }
     }

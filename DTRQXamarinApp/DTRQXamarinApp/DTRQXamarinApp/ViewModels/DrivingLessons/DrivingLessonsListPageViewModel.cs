@@ -58,7 +58,8 @@ namespace DTRQXamarinApp.ViewModels.DrivingLessons
         private async void ShowExitDialog(DrivingLessonInstructor DrivingLessonInstructor)
         {
             int id = DrivingLessonInstructor.DrivingLessonId;
-            var answer = await Application.Current.MainPage.DisplayAlert("Confirmer inscription", "Voulez-vous vous inscrire à la leçon du : " + DrivingLessonInstructor.DateTime + " qui se déroulera avec " + DrivingLessonInstructor.InstructorFirstName + " " + DrivingLessonInstructor.InstructorLastName, "Oui", "Non");
+
+            bool answer = await Application.Current.MainPage.DisplayAlert("Confirmation d'inscription", "Êtes-vous sûr de vouloir vous inscrire à la leçon du \n \b" + DrivingLessonInstructor.DateTime+" ?\n \nInstructeur : \n" + DrivingLessonInstructor.InstructorFirstName + " " + DrivingLessonInstructor.InstructorLastName, "Oui", "Non");
 
             if (answer)
             {

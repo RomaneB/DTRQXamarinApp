@@ -33,7 +33,7 @@ namespace DTRQXamarinApp.ViewModels.DrivingLessons
             int id = drivingLessonInstructor.DrivingLessonId;
             if (id != 0)
             {
-                Application.Current.MainPage.DisplayAlert("Informations leçon", "Date de la leçon : " + drivingLessonInstructor.DateTime + "\nInstructeur :" + drivingLessonInstructor.InstructorFirstName + " " + drivingLessonInstructor.InstructorLastName + "\nCommentaires sur la leçon : \n" + drivingLessonInstructor.Text, "Ok");
+                Application.Current.MainPage.DisplayAlert("Informations leçon", "Date de la leçon : \n" + drivingLessonInstructor.DateTime + "\n\nInstructeur : \n" + drivingLessonInstructor.InstructorFirstName + " " + drivingLessonInstructor.InstructorLastName + "\n\nCommentaires sur la leçon : \n" + drivingLessonInstructor.Text, "Ok");
             }
         }
 

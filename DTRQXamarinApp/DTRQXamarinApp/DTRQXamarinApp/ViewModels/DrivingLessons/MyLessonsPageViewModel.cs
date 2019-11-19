@@ -66,7 +66,7 @@ namespace DTRQXamarinApp.ViewModels.DrivingLessons
             // Si le cours a lieu dans 3 jours ou plus
             if (difference.Days >= 3)
             {
-                var answer = await Application.Current.MainPage.DisplayAlert("Confirmer desinscription", "Êtes vous sûr de vouloir vous désinscrire à la leçon du : " + DrivingLessonInstructor.DateTime + " qui se déroulera avec " + DrivingLessonInstructor.InstructorFirstName + " " + DrivingLessonInstructor.InstructorLastName, "Oui", "Non");
+                var answer = await Application.Current.MainPage.DisplayAlert("Confirmation de désinscription", "Êtes vous sûr de vouloir vous désinscrire à la leçon du : " + DrivingLessonInstructor.DateTime + " qui se déroulera avec " + DrivingLessonInstructor.InstructorFirstName + " " + DrivingLessonInstructor.InstructorLastName, "Oui", "Non");
 
                 if (answer)
                 {
@@ -89,13 +89,13 @@ namespace DTRQXamarinApp.ViewModels.DrivingLessons
                     }
                     else
                     {
-                        Application.Current.MainPage.DisplayAlert("Erreur", "Une erreur est survenue pendant l'annulation de l'inscription à la séssion. Veuillez réésayer. Si le problème persiste, veuillez contacter l'auto école.", "Ok");
+                        await Application.Current.MainPage.DisplayAlert("Erreur", "Une erreur est survenue pendant l'annulation de l'inscription à la séssion. Veuillez réésayer. Si le problème persiste, veuillez contacter l'auto école.", "Ok");
                     }
                 }
             }
             else
             {
-                Application.Current.MainPage.DisplayAlert("Erreur", "Vous ne pouvez pas supprimer une session qui est prévue pour dans moins de 72h.", "Ok");
+                await Application.Current.MainPage.DisplayAlert("Erreur", "Vous ne pouvez pas supprimer une session qui est prévue pour dans moins de 72h.", "Ok");
             }
         }
 
