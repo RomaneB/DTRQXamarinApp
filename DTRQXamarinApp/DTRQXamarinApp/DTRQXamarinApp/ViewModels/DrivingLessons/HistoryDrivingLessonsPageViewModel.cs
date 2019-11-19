@@ -16,6 +16,11 @@ namespace DTRQXamarinApp.ViewModels.DrivingLessons
         public IEnumerable<DrivingLessonInstructor> ListeDrivingLessons { get; set; }
         public ObservableCollection<DrivingLessonInstructor> Items { get; set; }
         public DelegateCommand<DrivingLessonInstructor> CommentLessonCommand { get; set; }
+        /// <summary>
+        /// Constructor of the viewModel
+        /// </summary>
+        /// <param name="navigationService"></param>
+        /// <param name="drivingLessonService"></param>
         public HistoryDrivingLessonsPageViewModel(INavigationService navigationService, DrivingLessonService drivingLessonService)
            : base(navigationService, drivingLessonService)
         {
@@ -25,7 +30,7 @@ namespace DTRQXamarinApp.ViewModels.DrivingLessons
         }
 
         /// <summary>
-        /// Permet de voir les informations sur une leçon passée
+        /// View information about a past lesson
         /// </summary>
         /// <param name="drivingLesson_Instructor"></param>
         private void CommentLesson(DrivingLessonInstructor drivingLessonInstructor)
@@ -33,13 +38,13 @@ namespace DTRQXamarinApp.ViewModels.DrivingLessons
             int id = drivingLessonInstructor.DrivingLessonId;
             if (id != 0)
             {
-                Application.Current.MainPage.DisplayAlert("Informations leçon", "Date de la leçon : " + drivingLessonInstructor.DateTime + "\nInstructeur :" + drivingLessonInstructor.InstructorFirstName + " " + drivingLessonInstructor.InstructorLastName + "\nCommentaires sur la leçon : \n" + drivingLessonInstructor.Text, "Ok");
+                Application.Current.MainPage.DisplayAlert("Informations leçon", "Date de la leçon : \n" + drivingLessonInstructor.DateTime + "\n\nInstructeur : \n" + drivingLessonInstructor.InstructorFirstName + " " + drivingLessonInstructor.InstructorLastName + "\n\nCommentaires sur la leçon : \n" + drivingLessonInstructor.Text, "Ok");
             }
         }
 
+        // Initialization of datas into table
         private void InitializeItems()
         {
-
             ListeDrivingLessons = DrivingLessonService.GetMyDrivingLessonsByUserId(int.Parse(Application.Current.Properties["UserId"].ToString()), false); 
             Items = new ObservableCollection<DrivingLessonInstructor>(ListeDrivingLessons);
         }
