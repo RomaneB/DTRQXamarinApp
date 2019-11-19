@@ -70,7 +70,7 @@ namespace DTRQXamarinApp.ViewModels.DrivingLessons
         {
             int id = DrivingLessonInstructor.DrivingLessonId;
 
-            bool answer = await Application.Current.MainPage.DisplayAlert("Confirmation d'inscription", "Êtes-vous sûr de vouloir vous inscrire à la leçon du \n \b" + DrivingLessonInstructor.DateTime+" ?\n \nInstructeur : \n" + DrivingLessonInstructor.InstructorFirstName + " " + DrivingLessonInstructor.InstructorLastName, "Oui", "Non");
+            bool answer = await Application.Current.MainPage.DisplayAlert("Confirmation d'inscription", "Êtes-vous sûr de vouloir vous inscrire à la leçon du \n" + DrivingLessonInstructor.DateTime+" ?\n \nInstructeur : \n" + DrivingLessonInstructor.InstructorFirstName + " " + DrivingLessonInstructor.InstructorLastName, "Oui", "Non");
 
             // If the user responds positively to the popup
             if (answer)

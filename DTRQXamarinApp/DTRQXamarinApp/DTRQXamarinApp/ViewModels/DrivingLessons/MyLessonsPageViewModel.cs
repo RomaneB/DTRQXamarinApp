@@ -72,7 +72,7 @@ namespace DTRQXamarinApp.ViewModels.DrivingLessons
             // If the course takes place in 3 days or more
             if (difference.Days >= 3)
             {
-                var answer = await Application.Current.MainPage.DisplayAlert("Confirmation de désinscription", "Êtes vous sûr de vouloir vous désinscrire à la leçon du : " + DrivingLessonInstructor.DateTime + " qui se déroulera avec " + DrivingLessonInstructor.InstructorFirstName + " " + DrivingLessonInstructor.InstructorLastName, "Oui", "Non");
+                var answer = await Application.Current.MainPage.DisplayAlert("Confirmation de désinscription", "Êtes vous sûr de vouloir vous désinscrire à la leçon du \n" + DrivingLessonInstructor.DateTime + "? \n\nInstructeur : " + DrivingLessonInstructor.InstructorFirstName + " " + DrivingLessonInstructor.InstructorLastName, "Oui", "Non");
 
                 // If the user responds positively
                 if (answer)
