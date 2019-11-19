@@ -1,4 +1,9 @@
-﻿using Prism;
+﻿using DTRQXamarinApp.Entities;
+using DTRQXamarinApp.IRepository;
+using DTRQXamarinApp.IService;
+using DTRQXamarinApp.Repository;
+using DTRQXamarinApp.Service;
+using Prism;
 using Prism.Ioc;
 using System;
 using System.Collections.Generic;
@@ -32,6 +37,7 @@ namespace DTRQXamarinApp.UWP
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             // Register any platform specific implementations
+            containerRegistry.Register<IDatabase, DatabaseConnectionUWP>();
         }
     }
 }
