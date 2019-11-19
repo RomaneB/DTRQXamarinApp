@@ -19,6 +19,12 @@ namespace DTRQXamarinApp.ViewModels.DrivingLessons
         public IEnumerable<DrivingLessonInstructor> ListeDrivingLessons { get; set; }
         public IEventAggregator _ea;
         public DelegateCommand<DrivingLessonInstructor> AnnulerLeconCommand { get; set; }
+        /// <summary>
+        /// Constructor of the viewModel
+        /// </summary>
+        /// <param name="navigationService"></param>
+        /// <param name="ea"></param>
+        /// <param name="drivingLessonService"></param>
         public MyLessonsPageViewModel(INavigationService navigationService, IEventAggregator ea, DrivingLessonService drivingLessonService)
             : base(navigationService, drivingLessonService)
         {
@@ -30,7 +36,7 @@ namespace DTRQXamarinApp.ViewModels.DrivingLessons
         }
 
         /// <summary>
-        /// Permet d'actualiser la liste quand l'utilisateur s'inscrit à une lecon
+        /// Update the list when the user subscribes to a lesson
         /// </summary>
         /// <param name="id"></param>
         private void MessageReceived(int id)
@@ -46,7 +52,7 @@ namespace DTRQXamarinApp.ViewModels.DrivingLessons
         }
 
         /// <summary>
-        /// Permet d'effectuer une action quand l'utilisateur annule une lecon
+        /// Allows to perform an action when the user cancels a lesson
         /// </summary>
         /// <param name = "DrivingLessonInstructor" ></ param >
         private void AnnulerLecon(DrivingLessonInstructor DrivingLessonInstructor)
@@ -55,7 +61,7 @@ namespace DTRQXamarinApp.ViewModels.DrivingLessons
         }
 
         /// <summary>
-        /// Permet d'afficher un PopUp et d'effectuer une action suivant l'option choisie
+        /// Display a PopUp and perform an action depending on the chosen option
         /// </summary>
         /// <param name="DrivingLessonInstructor"></param>
         private async void ShowExitDialog(DrivingLessonInstructor DrivingLessonInstructor)
@@ -63,42 +69,49 @@ namespace DTRQXamarinApp.ViewModels.DrivingLessons
             int id = DrivingLessonInstructor.DrivingLessonId;
             TimeSpan difference = DrivingLessonInstructor.DateTime - DateTime.Now;
 
-            // Si le cours a lieu dans 3 jours ou plus
+            // If the course takes place in 3 days or more
             if (difference.Days >= 3)
             {
-                var answer = await Application.Current.MainPage.DisplayAlert("Confirmer desinscription", "Êtes vous sûr de vouloir vous désinscrire à la leçon du : " + DrivingLessonInstructor.DateTime + " qui se déroulera avec " + DrivingLessonInstructor.InstructorFirstName + " " + DrivingLessonInstructor.InstructorLastName, "Oui", "Non");
+                var answer = await Application.Current.MainPage.DisplayAlert("Confirmation de désinscription", "Êtes vous sûr de vouloir vous désinscrire à la leçon du \n" + DrivingLessonInstructor.DateTime + "? \n\nInstructeur : " + DrivingLessonInstructor.InstructorFirstName + " " + DrivingLessonInstructor.InstructorLastName, "Oui", "Non");
 
+                // If the user responds positively
                 if (answer)
                 {
+                    // The driving lesson loses the id of the user
                     int updateLessonId = DrivingLessonService.UpdateUserIdForDrivingLesson(id, 0);
 
                     ListeDrivingLessons = DrivingLessonService.GetMyDrivingLessonsByUserId(int.Parse(Application.Current.Properties["UserId"].ToString()), true);
 
                     if (ListeDrivingLessons != null)
                     {
+                        // The lesson is removed from the table
                         Items.Remove(DrivingLessonInstructor);
                     }
 
+                    // Informations of this lesson are sent to the page containing all available lessons
                     _ea.GetEvent<DrivingSentEventUnregister>().Publish(updateLessonId);
 
                     if (updateLessonId != 0)
                     {
+                        // Deleting notifications for canceled lesson
                         InitializeItems();
                         NotificationCenter.Current.Cancel(int.Parse(DrivingLessonInstructor.DrivingLessonId.ToString() + "1"));
                         NotificationCenter.Current.Cancel(int.Parse(DrivingLessonInstructor.DrivingLessonId.ToString() + "3"));
                     }
                     else
                     {
-                        Application.Current.MainPage.DisplayAlert("Erreur", "Une erreur est survenue pendant l'annulation de l'inscription à la séssion. Veuillez réésayer. Si le problème persiste, veuillez contacter l'auto école.", "Ok");
+                        await Application.Current.MainPage.DisplayAlert("Erreur", "Une erreur est survenue pendant l'annulation de l'inscription à la séssion. Veuillez réésayer. Si le problème persiste, veuillez contacter l'auto école.", "Ok");
                     }
                 }
             }
+            // Otherwise, the user can not cancel the course
             else
             {
-                Application.Current.MainPage.DisplayAlert("Erreur", "Vous ne pouvez pas supprimer une session qui est prévue pour dans moins de 72h.", "Ok");
+                await Application.Current.MainPage.DisplayAlert("Erreur", "Vous ne pouvez pas supprimer une session qui est prévue pour dans moins de 72h.", "Ok");
             }
         }
 
+        // Initializing the data in the table
         private void InitializeItems()
         {
             ListeDrivingLessons = DrivingLessonService.GetMyDrivingLessonsByUserId(int.Parse(Application.Current.Properties["UserId"].ToString()), true);

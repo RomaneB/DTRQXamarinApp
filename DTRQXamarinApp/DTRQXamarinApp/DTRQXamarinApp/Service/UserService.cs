@@ -11,6 +11,10 @@ namespace DTRQXamarinApp.Service
     public class UserService : IService<User>
     {
         public IRepository<User> UserRepository { get; set; }
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="userRepository"></param>
         public UserService(IRepository<User> userRepository)
         {
             UserRepository = userRepository;
@@ -41,6 +45,12 @@ namespace DTRQXamarinApp.Service
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Method that verifies that the username and password of the user are valid.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public int GetUserIdByUserAndPassword(string user, string password)
         {
             try
