@@ -33,6 +33,13 @@ namespace DTRQXamarinApp.ViewModels.DrivingLessons
         private void MessageReceived(int id)
         {
             Items.Add(DrivingLessonService.GetByIdWithInstructor(id));
+            List<DrivingLessonInstructor> liste = Items.OrderBy(s => s.DateTime).ToList();
+            Items.Clear();
+
+            foreach (DrivingLessonInstructor item in liste)
+            {
+                Items.Add(item);
+            }
         }
 
         /// <summary>
@@ -57,7 +64,7 @@ namespace DTRQXamarinApp.ViewModels.DrivingLessons
             {
                 int drivingLessonId = DrivingLessonService.UpdateUserIdForDrivingLesson(id, 1);
 
-                ListeDrivingLessons = DrivingLessonService.GetDrivingLessonsByUserId(0, true);
+                ListeDrivingLessons = DrivingLessonService.GetDrivingLessonsByUserId(int.Parse(Application.Current.Properties["UserId"].ToString()));
 
                 if (ListeDrivingLessons != null)
                 {
@@ -104,8 +111,7 @@ namespace DTRQXamarinApp.ViewModels.DrivingLessons
 
         private void InitializeItems()
         {
-            //TODO Get UserId
-            ListeDrivingLessons = DrivingLessonService.GetDrivingLessonsByUserId(0, true);
+            ListeDrivingLessons = DrivingLessonService.GetDrivingLessonsByUserId(int.Parse(Application.Current.Properties["UserId"].ToString()));
             Items = new ObservableCollection<DrivingLessonInstructor>(ListeDrivingLessons);
         }
     }
