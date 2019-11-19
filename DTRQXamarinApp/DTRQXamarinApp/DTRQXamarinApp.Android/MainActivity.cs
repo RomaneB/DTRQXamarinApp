@@ -35,13 +35,6 @@ namespace DTRQXamarinApp.Droid
     {
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            //Repository
-            containerRegistry.Register(typeof(IRepository<>), typeof(Repository<>));
-
-            //Service
-            containerRegistry.Register(typeof(IService<TrainingSession>), typeof(TrainingSessionService));
-            containerRegistry.Register(typeof(IService<DrivingLesson>), typeof(DrivingLessonService));
-
             // Register any platform specific implementations
             containerRegistry.Register<IDatabase, DatabaseConnectionAndroid>();
         }
