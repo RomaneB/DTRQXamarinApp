@@ -13,6 +13,11 @@ namespace DTRQXamarinApp.Service
         public IRepository<DrivingLesson> DrivingLessonRepository { get; set; }
         public IRepository<Instructor> InstructorRepository { get; set; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="drivingLessonRepository"></param>
+        /// <param name="instructorRepository"></param>
         public DrivingLessonService(IRepository<DrivingLesson> drivingLessonRepository, IRepository<Instructor> instructorRepository)
         {
             DrivingLessonRepository = drivingLessonRepository;
@@ -85,6 +90,12 @@ namespace DTRQXamarinApp.Service
            
         }
 
+        /// <summary>
+        /// Query that retrieves the list of my lessons sorted by date
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="dateFuture"></param>
+        /// <returns></returns>
         public IEnumerable<DrivingLessonInstructor> GetMyDrivingLessonsByUserId(int userId, bool dateFuture)
         {
             try
@@ -94,6 +105,7 @@ namespace DTRQXamarinApp.Service
                 //Get All Instructor
                 IEnumerable<Instructor> lstInstructor = InstructorRepository.GetAll();
 
+                // My future lessons
                 if (dateFuture)
                 {
                     return lstDriving.Join(lstInstructor, d => d.InstructorId, t => t.Id, (d, t) =>
@@ -108,6 +120,7 @@ namespace DTRQXamarinApp.Service
                         UserId = d.UserId
                     }).Where(w => w.UserId == userId && w.DateTime > DateTime.Now).OrderBy(s => s.DateTime);
                 }
+                // My passed lessons
                 else
                 {
                     return lstDriving.Join(lstInstructor, d => d.InstructorId, t => t.Id, (d, t) =>
@@ -129,6 +142,7 @@ namespace DTRQXamarinApp.Service
             }           
         }
 
+        // Method to retrieve the list of all available lessons that do not start at the same time as one of the user's lessons.
         public IEnumerable<DrivingLessonInstructor> GetDrivingLessonsByUserId(int userId)
         {
             try

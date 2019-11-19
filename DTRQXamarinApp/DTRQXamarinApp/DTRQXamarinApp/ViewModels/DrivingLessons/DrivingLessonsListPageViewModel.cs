@@ -20,6 +20,12 @@ namespace DTRQXamarinApp.ViewModels.DrivingLessons
         public ObservableCollection<DrivingLessonInstructor> Items { get; set; }
         public DelegateCommand<DrivingLessonInstructor> InscriptionLessonCommand { get; set; }
         public IEventAggregator _ea;
+        /// <summary>
+        /// Constructor of the viewModel
+        /// </summary>
+        /// <param name="navigationService"></param>
+        /// <param name="ea"></param>
+        /// <param name="drivingLessonService"></param>
         public DrivingLessonsListPageViewModel(INavigationService navigationService, IEventAggregator ea, DrivingLessonService drivingLessonService)
            : base(navigationService, drivingLessonService)
         {
@@ -30,6 +36,11 @@ namespace DTRQXamarinApp.ViewModels.DrivingLessons
             InscriptionLessonCommand = new DelegateCommand<DrivingLessonInstructor>(InscriptionLesson);
         }
 
+        /// <summary>
+        /// Method to retrieve changes made on the page containing my lessons
+        /// This method adds the new element to the table and sorts it according to the dates of the lessons
+        /// </summary>
+        /// <param name="id"></param>
         private void MessageReceived(int id)
         {
             Items.Add(DrivingLessonService.GetByIdWithInstructor(id));
@@ -43,7 +54,7 @@ namespace DTRQXamarinApp.ViewModels.DrivingLessons
         }
 
         /// <summary>
-        /// Permet de récupéré le driving instructor sélectionné et modifie le userId de celui-ci
+        /// Retrieves the selected driving instructor and modifies the userId of it
         /// </summary>
         /// <param name="DrivingLessonInstructor"></param>
         protected void InscriptionLesson(DrivingLessonInstructor DrivingLessonInstructor)
@@ -52,7 +63,7 @@ namespace DTRQXamarinApp.ViewModels.DrivingLessons
         }
 
         /// <summary>
-        /// Popup permettant de valider ou non une inscription à un cour de conduite
+        /// Popup to validate or not a registration to a driving court
         /// </summary>
         /// <param name="DrivingLessonInstructor"></param>
         private async void ShowExitDialog(DrivingLessonInstructor DrivingLessonInstructor)
@@ -60,6 +71,7 @@ namespace DTRQXamarinApp.ViewModels.DrivingLessons
             int id = DrivingLessonInstructor.DrivingLessonId;
             var answer = await Application.Current.MainPage.DisplayAlert("Confirmer inscription", "Voulez-vous vous inscrire à la leçon du : " + DrivingLessonInstructor.DateTime + " qui se déroulera avec " + DrivingLessonInstructor.InstructorFirstName + " " + DrivingLessonInstructor.InstructorLastName, "Oui", "Non");
 
+            // If the user responds positively to the popup
             if (answer)
             {
                 int drivingLessonId = DrivingLessonService.UpdateUserIdForDrivingLesson(id, 1);
@@ -68,11 +80,13 @@ namespace DTRQXamarinApp.ViewModels.DrivingLessons
 
                 if (ListeDrivingLessons != null)
                 {
+                    //The lesson is removed from the table containing all available lessons
                     Items.Remove(DrivingLessonInstructor);
                 }
 
                 if (drivingLessonId != 0)
                 {
+                    // Notification one hour before class
                     var notification = new NotificationRequest
                     {
                         NotificationId = int.Parse(DrivingLessonInstructor.DrivingLessonId.ToString() + "1"),
@@ -86,8 +100,10 @@ namespace DTRQXamarinApp.ViewModels.DrivingLessons
                     DateTime dateLecon = new DateTime(DrivingLessonInstructor.DateTime.Year, DrivingLessonInstructor.DateTime.Month, DrivingLessonInstructor.DateTime.Day);
                     DateTime dateJour = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
 
+                    // If the lesson goes well in at least a day
                     if (dateLecon > dateJour)
                     {
+                        // Notification one day before class
                         notification = new NotificationRequest
                         {
                             NotificationId = int.Parse(DrivingLessonInstructor.DrivingLessonId.ToString() + "3"),
@@ -99,6 +115,7 @@ namespace DTRQXamarinApp.ViewModels.DrivingLessons
                         NotificationCenter.Current.Show(notification);
                     }
 
+                    // Registration information for this lesson is sent to the page containing all my lessons
                     _ea.GetEvent<DrivingSentEvent>().Publish(drivingLessonId);
                     await Application.Current.MainPage.DisplayAlert("Validation", "Vous êtes désormais inscrit à la session du : " + DrivingLessonInstructor.DateTime, "Ok");
                 }
@@ -109,6 +126,7 @@ namespace DTRQXamarinApp.ViewModels.DrivingLessons
             }
         }
 
+        // Initializing the data in the table
         private void InitializeItems()
         {
             ListeDrivingLessons = DrivingLessonService.GetDrivingLessonsByUserId(int.Parse(Application.Current.Properties["UserId"].ToString()));
