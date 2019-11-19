@@ -1,4 +1,5 @@
 ﻿using DTRQXamarinApp.Entities;
+using DTRQXamarinApp.Event;
 using DTRQXamarinApp.Service;
 using Plugin.LocalNotification;
 using Prism.Commands;

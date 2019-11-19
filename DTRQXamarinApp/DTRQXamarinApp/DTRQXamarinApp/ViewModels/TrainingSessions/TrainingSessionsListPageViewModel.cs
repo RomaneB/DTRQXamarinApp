@@ -1,4 +1,5 @@
 ﻿using DTRQXamarinApp.Entities;
+using DTRQXamarinApp.Event;
 using DTRQXamarinApp.IService;
 using DTRQXamarinApp.Service;
 using Plugin.LocalNotification;
