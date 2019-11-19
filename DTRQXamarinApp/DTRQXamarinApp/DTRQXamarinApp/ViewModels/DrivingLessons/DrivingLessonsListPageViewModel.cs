@@ -69,20 +69,25 @@ namespace DTRQXamarinApp.ViewModels.DrivingLessons
         private async void ShowExitDialog(DrivingLessonInstructor DrivingLessonInstructor)
         {
             int id = DrivingLessonInstructor.DrivingLessonId;
+            int userId = int.Parse(Application.Current.Properties["UserId"].ToString());
 
             bool answer = await Application.Current.MainPage.DisplayAlert("Confirmation d'inscription", "Êtes-vous sûr de vouloir vous inscrire à la leçon du \n \b" + DrivingLessonInstructor.DateTime+" ?\n \nInstructeur : \n" + DrivingLessonInstructor.InstructorFirstName + " " + DrivingLessonInstructor.InstructorLastName, "Oui", "Non");
 
             // If the user responds positively to the popup
             if (answer)
             {
-                int drivingLessonId = DrivingLessonService.UpdateUserIdForDrivingLesson(id, 1);
+                int drivingLessonId = DrivingLessonService.UpdateUserIdForDrivingLesson(id, userId);
 
-                ListeDrivingLessons = DrivingLessonService.GetDrivingLessonsByUserId(int.Parse(Application.Current.Properties["UserId"].ToString()));
+                ListeDrivingLessons = DrivingLessonService.GetDrivingLessonsByUserId(userId);
 
                 if (ListeDrivingLessons != null)
                 {
-                    //The lesson is removed from the table containing all available lessons
-                    Items.Remove(DrivingLessonInstructor);
+                    // Actualization of table
+                    Items.Clear();
+                    foreach (DrivingLessonInstructor item in ListeDrivingLessons)
+                    {
+                        Items.Add(item);
+                    }
                 }
 
                 if (drivingLessonId != 0)
