@@ -76,13 +76,21 @@ namespace DTRQXamarinApp.Service
         /// <returns></returns>
         public IEnumerable<TrainingSession> GetAllByUserId(int userId)
         {
-            //Get All User Training
-            IEnumerable< UserTrainingSession> lstUT = UserTrainingSessionRepository.GetAll();
-            //Get All Training
-            IEnumerable<TrainingSession> lstT = TrainingSessionRepository.GetAll();
-            //return gettAllbyuserid
-            List<int> ids = lstUT.Where(t => t.UserId == userId).Select(t => t.TrainingSessionId).ToList();
-            return lstT.Where(t => ids.Contains(t.Id)).Where(t=> t.Date >= DateTime.Now).OrderByDescending(s => s.Date).ToList();
+            try
+            {
+                //Get All User Training
+                IEnumerable< UserTrainingSession> lstUT = UserTrainingSessionRepository.GetAll();
+                //Get All Training
+                IEnumerable<TrainingSession> lstT = TrainingSessionRepository.GetAll();
+                //return gettAllbyuserid
+                List<int> ids = lstUT.Where(t => t.UserId == userId).Select(t => t.TrainingSessionId).ToList();
+                return lstT.Where(t => ids.Contains(t.Id)).Where(t=> t.Date >= DateTime.Now).OrderByDescending(s => s.Date).ToList();    
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(e.Message);
+            }
         }
 
         /// <summary>
@@ -92,19 +100,27 @@ namespace DTRQXamarinApp.Service
         /// <returns></returns>
         public IEnumerable<ResultTrainingSessionViewModel> GetResultsByUserId(int userId)
         {
-            //Get All User Training
-            IEnumerable<UserTrainingSession> lstUT = UserTrainingSessionRepository.GetAll().Where(ut => ut.UserId == userId);
-
-            List<ResultTrainingSessionViewModel> results = new List<ResultTrainingSessionViewModel>();
-            foreach (var item in lstUT)
+            try
             {
-                TrainingSession t = TrainingSessionRepository.GetById(item.TrainingSessionId);
-                if (t.Date < DateTime.Now)
+                //Get All User Training
+                IEnumerable<UserTrainingSession> lstUT = UserTrainingSessionRepository.GetAll().Where(ut => ut.UserId == userId);
+
+                List<ResultTrainingSessionViewModel> results = new List<ResultTrainingSessionViewModel>();
+                foreach (var item in lstUT)
                 {
-                    results.Add(new ResultTrainingSessionViewModel(t, item.Result) {AvailableSeat = t.AvailableSeat, Date = t.Date, Id = t.Id, Result= item.Result });
+                    TrainingSession t = TrainingSessionRepository.GetById(item.TrainingSessionId);
+                    if (t.Date < DateTime.Now)
+                    {
+                        results.Add(new ResultTrainingSessionViewModel(t, item.Result) {AvailableSeat = t.AvailableSeat, Date = t.Date, Id = t.Id, Result= item.Result });
+                    }
                 }
+                return results.OrderByDescending(t=> t.Date);
             }
-            return results.OrderByDescending(t=> t.Date);
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            
         }
 
         /// <summary>
@@ -114,17 +130,24 @@ namespace DTRQXamarinApp.Service
         /// <returns></returns>
         public IEnumerable<TrainingSession> GetAllAvailable(int userId)
         {
-            //Get all ids of the sessions
-            IEnumerable<int> lstAll = TrainingSessionRepository.GetAll().Where(t => t.Date > DateTime.Now).Select(t => t.Id);
-            //Get all ids of the sessions on which the user is registered
-            IEnumerable<int> lstAllByUser = this.GetAllByUserId(userId).Select(t => t.Id);
+            try
+            {
+                //Get all ids of the sessions
+                IEnumerable<int> lstAll = TrainingSessionRepository.GetAll().Where(t => t.Date > DateTime.Now).Select(t => t.Id);
+                //Get all ids of the sessions on which the user is registered
+                IEnumerable<int> lstAllByUser = this.GetAllByUserId(userId).Select(t => t.Id);
 
-            //Get all ids of the available sessions for the user
-            IEnumerable<int> ids = lstAll.Except(lstAllByUser);
+                //Get all ids of the available sessions for the user
+                IEnumerable<int> ids = lstAll.Except(lstAllByUser);
 
-            //Returns sessions available for the user
-            return TrainingSessionRepository.GetAll().Where(t => ids.Contains(t.Id));
+                //Returns sessions available for the user
+                return TrainingSessionRepository.GetAll().Where(t => ids.Contains(t.Id));
+            }
+            catch (Exception e)
+            {
 
+                throw new Exception(e.Message);
+            }
         }
 
         /// <summary>
@@ -135,11 +158,20 @@ namespace DTRQXamarinApp.Service
         /// <returns></returns>
         public int SaveRegister(int userId, int trainingSessionId)
         {
-            return UserTrainingSessionRepository.Add(new UserTrainingSession()
+            try
             {
-                UserId = userId,
-                TrainingSessionId = trainingSessionId
-            });
+                return UserTrainingSessionRepository.Add(new UserTrainingSession()
+                {
+                    UserId = userId,
+                    TrainingSessionId = trainingSessionId
+                });
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(e.Message);
+            }
+            
         }
 
         /// <summary>
@@ -150,10 +182,18 @@ namespace DTRQXamarinApp.Service
         /// <returns></returns>
         public int SaveUnregister(int userId, int trainingSessionId)
         {
-            var lst = UserTrainingSessionRepository.GetAll().Where(ut => ut.TrainingSessionId == trainingSessionId && ut.UserId == userId);
-             
-            var id = lst.Select(ut => ut.Id).FirstOrDefault();
-            return UserTrainingSessionRepository.Delete(id);
+            try
+            {
+                var lst = UserTrainingSessionRepository.GetAll().Where(ut => ut.TrainingSessionId == trainingSessionId && ut.UserId == userId);
+
+                var id = lst.Select(ut => ut.Id).FirstOrDefault();
+                return UserTrainingSessionRepository.Delete(id);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            
         }
     }
 }
