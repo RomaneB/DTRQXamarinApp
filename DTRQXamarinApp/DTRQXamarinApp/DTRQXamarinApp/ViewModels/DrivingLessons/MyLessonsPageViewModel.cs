@@ -36,7 +36,13 @@ namespace DTRQXamarinApp.ViewModels.DrivingLessons
         private void MessageReceived(int id)
         {
             Items.Add(DrivingLessonService.GetByIdWithInstructor(id));
-            Items.OrderBy(s => s.DateTime);
+            List<DrivingLessonInstructor> liste = Items.OrderBy(s => s.DateTime).ToList();
+            Items.Clear();
+
+            foreach (DrivingLessonInstructor item in liste)
+            {
+                Items.Add(item);
+            }
         }
 
         /// <summary>
@@ -55,32 +61,41 @@ namespace DTRQXamarinApp.ViewModels.DrivingLessons
         private async void ShowExitDialog(DrivingLessonInstructor DrivingLessonInstructor)
         {
             int id = DrivingLessonInstructor.DrivingLessonId;
-            var answer = await Application.Current.MainPage.DisplayAlert("Confirmer desinscription", "Êtes vous sûr de vouloir vous désinscrire à la leçon du : " + DrivingLessonInstructor.DateTime + " qui se déroulera avec " + DrivingLessonInstructor.InstructorFirstName + " " + DrivingLessonInstructor.InstructorLastName, "Oui", "Non");
+            TimeSpan difference = DrivingLessonInstructor.DateTime - DateTime.Now;
 
-            if (answer)
+            // Si le cours a lieu dans 3 jours ou plus
+            if (difference.Days >= 3)
             {
+                var answer = await Application.Current.MainPage.DisplayAlert("Confirmer desinscription", "Êtes vous sûr de vouloir vous désinscrire à la leçon du : " + DrivingLessonInstructor.DateTime + " qui se déroulera avec " + DrivingLessonInstructor.InstructorFirstName + " " + DrivingLessonInstructor.InstructorLastName, "Oui", "Non");
 
-                int updateLessonId = DrivingLessonService.UpdateUserIdForDrivingLesson(id, 0);
-
-                ListeDrivingLessons = DrivingLessonService.GetMyDrivingLessonsByUserId(int.Parse(Application.Current.Properties["UserId"].ToString()), true);
-
-                if (ListeDrivingLessons != null)
+                if (answer)
                 {
-                    Items.Remove(DrivingLessonInstructor);
-                }
+                    int updateLessonId = DrivingLessonService.UpdateUserIdForDrivingLesson(id, 0);
 
-                _ea.GetEvent<DrivingSentEventUnregister>().Publish(updateLessonId);
+                    ListeDrivingLessons = DrivingLessonService.GetMyDrivingLessonsByUserId(int.Parse(Application.Current.Properties["UserId"].ToString()), true);
 
-                if (updateLessonId != 0)
-                {
-                    InitializeItems();
-                    NotificationCenter.Current.Cancel(int.Parse(DrivingLessonInstructor.DrivingLessonId.ToString() + "1"));
-                    NotificationCenter.Current.Cancel(int.Parse(DrivingLessonInstructor.DrivingLessonId.ToString() + "3"));
+                    if (ListeDrivingLessons != null)
+                    {
+                        Items.Remove(DrivingLessonInstructor);
+                    }
+
+                    _ea.GetEvent<DrivingSentEventUnregister>().Publish(updateLessonId);
+
+                    if (updateLessonId != 0)
+                    {
+                        InitializeItems();
+                        NotificationCenter.Current.Cancel(int.Parse(DrivingLessonInstructor.DrivingLessonId.ToString() + "1"));
+                        NotificationCenter.Current.Cancel(int.Parse(DrivingLessonInstructor.DrivingLessonId.ToString() + "3"));
+                    }
+                    else
+                    {
+                        Application.Current.MainPage.DisplayAlert("Erreur", "Une erreur est survenue pendant l'annulation de l'inscription à la séssion. Veuillez réésayer. Si le problème persiste, veuillez contacter l'auto école.", "Ok");
+                    }
                 }
-                else
-                {
-                    await Application.Current.MainPage.DisplayAlert("Erreur", "Une erreur est survenue pendant l'annulation de l'inscription à la séssion. Veuillez réésayer. Si le problème persiste, veuillez contacter l'auto école.", "Ok");
-                }
+            }
+            else
+            {
+                Application.Current.MainPage.DisplayAlert("Erreur", "Vous ne pouvez pas supprimer une session qui est prévue pour dans moins de 72h.", "Ok");
             }
         }
 

@@ -34,11 +34,11 @@ namespace DTRQXamarinApp.Droid
             }
             catch (SQLiteException ex)
             {
-                return null;
+                throw ex;
             }
             catch (Exception ex)
             {
-                return null;
+                throw new Exception(ex.Message);
             }
         }
     }

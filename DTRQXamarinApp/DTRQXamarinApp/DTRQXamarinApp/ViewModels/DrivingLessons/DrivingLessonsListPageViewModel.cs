@@ -33,6 +33,13 @@ namespace DTRQXamarinApp.ViewModels.DrivingLessons
         private void MessageReceived(int id)
         {
             Items.Add(DrivingLessonService.GetByIdWithInstructor(id));
+            List<DrivingLessonInstructor> liste = Items.OrderBy(s => s.DateTime).ToList();
+            Items.Clear();
+
+            foreach (DrivingLessonInstructor item in liste)
+            {
+                Items.Add(item);
+            }
         }
 
         /// <summary>
