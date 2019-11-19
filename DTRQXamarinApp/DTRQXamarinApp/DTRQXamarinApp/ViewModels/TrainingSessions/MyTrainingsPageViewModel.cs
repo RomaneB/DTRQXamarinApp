@@ -1,4 +1,5 @@
 ﻿using DTRQXamarinApp.Entities;
+using DTRQXamarinApp.Event;
 using DTRQXamarinApp.Service;
 using Plugin.LocalNotification;
 using Prism.Commands;
@@ -78,7 +79,7 @@ namespace DTRQXamarinApp.ViewModels.TrainingSessions
             catch (Exception ex)
             {
 
-                throw;
+                throw new Exception(ex.Message);
             }
         }        
 

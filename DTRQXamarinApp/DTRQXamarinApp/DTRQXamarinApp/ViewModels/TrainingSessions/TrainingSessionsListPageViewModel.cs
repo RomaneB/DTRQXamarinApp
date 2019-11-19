@@ -1,4 +1,5 @@
 ﻿using DTRQXamarinApp.Entities;
+using DTRQXamarinApp.Event;
 using DTRQXamarinApp.IService;
 using DTRQXamarinApp.Service;
 using Plugin.LocalNotification;
@@ -100,8 +101,7 @@ namespace DTRQXamarinApp.ViewModels.TrainingSessions
             }
             catch (Exception ex)
             {
-
-                throw;
+                throw new Exception(ex.Message);
             }
         }        
 
