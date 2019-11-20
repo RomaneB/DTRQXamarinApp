@@ -200,7 +200,7 @@ namespace DTRQXamarinApp.ViewModels.TrainingSessions
         /// Get the next available training sessions ordered by date.
         /// </summary>
         /// <returns>A collection of <see cref="TrainingSession"/>.</returns>
-        private IEnumerable<TrainingSession> GetAvailableTrainingSessions()
+        private IEnumerable<PictureTrainingSessionViewModel> GetAvailableTrainingSessions()
         {
             return TrainingSessionService
                 .GetAllAvailable(int.Parse(Application.Current.Properties["UserId"].ToString()))
@@ -211,7 +211,7 @@ namespace DTRQXamarinApp.ViewModels.TrainingSessions
         /// Get the next available training sessions ordered by date with available places only.
         /// </summary>
         /// <returns>A collection of <see cref="TrainingSession"/>.</returns>
-        private IEnumerable<TrainingSession> GetTrainingSessionsWithAvailableSeats()
+        private IEnumerable<PictureTrainingSessionViewModel> GetTrainingSessionsWithAvailableSeats()
         {
             return this.GetAvailableTrainingSessions()
                 .Where(t => t.AvailableSeat > 0);

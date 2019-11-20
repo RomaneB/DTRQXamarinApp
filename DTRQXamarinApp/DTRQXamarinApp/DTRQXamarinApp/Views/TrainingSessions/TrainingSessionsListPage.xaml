@@ -8,12 +8,13 @@
     prism:ViewModelLocator.AutowireViewModel="True">
     <StackLayout>
         <StackLayout HorizontalOptions="CenterAndExpand">
-            <Label Text="{Binding SwitchText}" VerticalOptions="CenterAndExpand"/>
-            <Switch IsToggled="{Binding SwitchValue}" HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
+            <Label Text="{Binding SwitchText}" VerticalOptions="CenterAndExpand" />
+            <Switch
+                HorizontalOptions="Center"
+                IsToggled="{Binding SwitchValue}"
+                VerticalOptions="CenterAndExpand">
                 <Switch.Behaviors>
-                    <prism:EventToCommandBehavior 
-                        EventName="Toggled" 
-                        Command="{Binding SwitchToggle}"></prism:EventToCommandBehavior>
+                    <prism:EventToCommandBehavior Command="{Binding SwitchToggle}" EventName="Toggled" />
                 </Switch.Behaviors>
             </Switch>
         </StackLayout>
