@@ -54,6 +54,16 @@ namespace DTRQXamarinApp.Service
                     new TrainingSession {Date = new DateTime(2020,03,01,15,30,00), AvailableSeat=15},//15
                     new TrainingSession {Date = new DateTime(2019,12,10,15,00,00), AvailableSeat=15},
                     new TrainingSession {Date = new DateTime(2020,03,01,15,00,00), AvailableSeat=12},
+
+                    new TrainingSession {Date = new DateTime(2020,03,01,15,00,00), AvailableSeat=0},
+                    new TrainingSession {Date = new DateTime(2020,03,01,15,00,00), AvailableSeat=1},
+                    new TrainingSession {Date = new DateTime(2020,03,01,15,00,00), AvailableSeat=2},
+                    new TrainingSession {Date = new DateTime(2020,03,02,15,30,00), AvailableSeat=0},
+                    new TrainingSession {Date = new DateTime(2020,03,02,15,30,00), AvailableSeat=1},
+                    new TrainingSession {Date = new DateTime(2020,03,03,15,30,00), AvailableSeat=2},
+                    new TrainingSession {Date = new DateTime(2020,03,03,16,00,00), AvailableSeat=0},
+                    new TrainingSession {Date = new DateTime(2020,03,03,16,00,00), AvailableSeat=1},
+                    new TrainingSession {Date = new DateTime(2020,03,07,16,00,00), AvailableSeat=2},
                     });
 
                     //Init User
