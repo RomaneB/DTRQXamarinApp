@@ -128,7 +128,7 @@ namespace DTRQXamarinApp.Service
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public IEnumerable<TrainingSession> GetAllAvailable(int userId)
+        public IEnumerable<PictureTrainingSessionViewModel> GetAllAvailable(int userId)
         {
             try
             {
@@ -141,7 +141,37 @@ namespace DTRQXamarinApp.Service
                 IEnumerable<int> ids = lstAll.Except(lstAllByUser);
 
                 //Returns sessions available for the user
-                return TrainingSessionRepository.GetAll().Where(t => ids.Contains(t.Id));
+                var lstAvailableSession = TrainingSessionRepository.GetAll().Where(t => ids.Contains(t.Id));
+
+                List<PictureTrainingSessionViewModel> results = new List<PictureTrainingSessionViewModel>();
+
+                //Foreach availableSession add the coorect picture
+                foreach (var item in lstAvailableSession)
+                {
+                    // retrieve the trainingSession
+                    TrainingSession t = TrainingSessionRepository.GetById(item.Id);
+
+                    var pictureTraining = "";
+
+                    if (item.AvailableSeat == 0)
+                    {
+                        pictureTraining  = "unavailable.png";
+                    }
+                    else if (item.AvailableSeat < 3)
+                    {
+                        pictureTraining = "warning.png";
+                    }
+
+                    results.Add(new PictureTrainingSessionViewModel(t, pictureTraining)
+                    {
+                        Id = t.Id,
+                        AvailableSeat = t.AvailableSeat,
+                        Date = t.Date,
+                        PictureTraining = pictureTraining
+                    });
+
+                }
+                return results.OrderByDescending(r => r.Date);
             }
             catch (Exception e)
             {
