@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:prism="http://prismlibrary.com"
-             prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="DTRQXamarinApp.Views.TrainingSessions.TrainingSessionsListPage"
-             Title="{Binding Title}">
+<ContentPage
+    x:Class="DTRQXamarinApp.Views.TrainingSessions.TrainingSessionsListPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:prism="http://prismlibrary.com"
+    Title="{Binding Title}"
+    prism:ViewModelLocator.AutowireViewModel="True">
     <StackLayout>
         <StackLayout HorizontalOptions="CenterAndExpand">
             <Label Text="{Binding SwitchText}" VerticalOptions="CenterAndExpand"/>
@@ -16,26 +17,40 @@
                 </Switch.Behaviors>
             </Switch>
         </StackLayout>
-        
-        <ListView ItemsSource="{Binding Items}" x:Name="LstItems" SelectionMode="None" CachingStrategy="RecycleElement" SeparatorVisibility="Default">
+
+        <ListView
+            x:Name="LstItems"
+            CachingStrategy="RecycleElement"
+            ItemsSource="{Binding Items}"
+            SelectionMode="None"
+            SeparatorVisibility="Default">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <StackLayout Orientation="Horizontal" Padding="3">
-                            <Label Text="{Binding Date, StringFormat='{0:dd/MM/yyyy - HH:mm}'}" FontSize="Small" VerticalOptions="Center"/>
-                            <Image Source="seat.png" HorizontalOptions="EndAndExpand"/>
-                            <Label Text="{Binding AvailableSeat}" HorizontalOptions="End" FontSize="Small" VerticalOptions="Center"/>
-                            <Image Source="unavailable.png" />
-                            <Button Text=" S'inscrire"
+                        <StackLayout Padding="3" Orientation="Horizontal">
+                            <Label
+                                FontSize="Small"
+                                Text="{Binding Date, StringFormat='{0:dd/MM/yyyy - HH:mm}'}"
+                                VerticalOptions="Center" />
+                            <Image HorizontalOptions="EndAndExpand" Source="seat.png" />
+                            <Label
+                                FontSize="Small"
+                                HorizontalOptions="End"
+                                Text="{Binding AvailableSeat}"
+                                VerticalOptions="Center" />
+
+                            <Image x:Name="ImgAvailableSeat" Source="{Binding PictureTraining}" />
+                            <Button
+                                BackgroundColor="#FF669900"
                                 Command="{Binding Path=BindingContext.Register, Source={x:Reference LstItems}}"
                                 CommandParameter="{Binding .}"
-                                BackgroundColor="#FF669900"
-                                TextColor="White"/>
+                                Text=" S'inscrire"
+                                TextColor="White" />
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
     </StackLayout>
-    
+
 </ContentPage>
