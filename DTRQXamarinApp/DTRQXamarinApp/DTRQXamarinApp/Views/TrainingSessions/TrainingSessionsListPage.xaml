@@ -8,7 +8,13 @@
     <StackLayout>
         <StackLayout HorizontalOptions="CenterAndExpand">
             <Label Text="{Binding SwitchText}" VerticalOptions="CenterAndExpand"/>
-            <!--<Switch IsToggled="{Binding SwitchToggled}" HorizontalOptions="Center" VerticalOptions="CenterAndExpand"/>-->
+            <Switch IsToggled="{Binding SwitchValue}" HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
+                <Switch.Behaviors>
+                    <prism:EventToCommandBehavior 
+                        EventName="Toggled" 
+                        Command="{Binding SwitchToggle}"></prism:EventToCommandBehavior>
+                </Switch.Behaviors>
+            </Switch>
         </StackLayout>
         
         <ListView ItemsSource="{Binding Items}" x:Name="LstItems" SelectionMode="None" CachingStrategy="RecycleElement" SeparatorVisibility="Default">
