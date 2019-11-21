@@ -9,7 +9,6 @@ using DTRQXamarinApp.Views.TrainingSessions;
 using DTRQXamarinApp.Views;
 using DTRQXamarinApp.ViewModels;
 using DTRQXamarinApp.Service;
-using System.Threading;
 using DTRQXamarinApp.IRepository;
 using DTRQXamarinApp.Repository;
 using DTRQXamarinApp.Entities;
@@ -37,6 +36,7 @@ namespace DTRQXamarinApp
             {
                 // The application opens on the home page
                 await NavigationService.NavigateAsync("NavigationPage/MainPage");
+
             }
             else
             {
