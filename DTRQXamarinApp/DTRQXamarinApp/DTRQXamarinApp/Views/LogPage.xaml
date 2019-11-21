@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:prism="http://prismlibrary.com"
-             prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="DTRQXamarinApp.Views.LogPage"
-             Title="{Binding Title}">
+<ContentPage
+    x:Class="DTRQXamarinApp.Views.LogPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:prism="http://prismlibrary.com"
+    Title="{Binding Title}"
+    prism:ViewModelLocator.AutowireViewModel="True">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -15,28 +16,43 @@
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
 
-        <Image Source="login"
-                        HeightRequest="80"
-                        WidthRequest="80"
-                        HorizontalOptions="CenterAndExpand"
-                        Margin="0,25,0,0"
-                        Grid.Row="0"/>
+        <Image
+            Grid.Row="0"
+            Margin="0,25,0,0"
+            HeightRequest="80"
+            HorizontalOptions="CenterAndExpand"
+            Source="login"
+            WidthRequest="80" />
 
-        <Label Text="Login"
-                        FontAttributes="Bold"
-                        TextColor="CornflowerBlue"
-                        HorizontalOptions="CenterAndExpand"
-                        FontSize="25"
-                        VerticalOptions="Center"
-                        Margin="0,25,0,0"
-                        Grid.Row="1"
-                        x:Name="welcomeText"/>
+        <Label
+            x:Name="welcomeText"
+            Grid.Row="1"
+            Margin="0,25,0,0"
+            FontAttributes="Bold"
+            FontSize="25"
+            HorizontalOptions="CenterAndExpand"
+            Text="Page de connexion"
+            TextColor="CornflowerBlue"
+            VerticalOptions="Center" />
 
 
 
-        <Entry Text="{Binding UserName}" Placeholder="User" VerticalOptions="EndAndExpand" Grid.Row="2" />
-        <Entry Text="{Binding Password}" IsPassword="true" Placeholder="Password" VerticalOptions="StartAndExpand" Grid.Row="3" />
-        <Button Text="Submit" Margin="0,10,0,0" Command="{Binding LoginCommand}" Grid.Row="4" />
+        <Entry
+            Grid.Row="2"
+            Placeholder="Nom d'utilisateur"
+            Text="{Binding UserName}"
+            VerticalOptions="EndAndExpand" />
+        <Entry
+            Grid.Row="3"
+            IsPassword="true"
+            Placeholder="Mot de passe"
+            Text="{Binding Password}"
+            VerticalOptions="StartAndExpand" />
+        <Button
+            Grid.Row="4"
+            Margin="0,10,0,0"
+            Command="{Binding LoginCommand}"
+            Text="Se connecter" />
     </Grid>
 
 </ContentPage>

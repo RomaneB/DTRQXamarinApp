@@ -128,20 +128,61 @@ namespace DTRQXamarinApp.Service
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public IEnumerable<TrainingSession> GetAllAvailable(int userId)
+        public IEnumerable<PictureTrainingSessionViewModel> GetAllAvailable(int userId)
         {
             try
             {
+                var lstAllByUsers = this.GetAllByUserId(userId);
+
                 //Get all ids of the sessions
-                IEnumerable<int> lstAll = TrainingSessionRepository.GetAll().Where(t => t.Date > DateTime.Now).Select(t => t.Id);
-                //Get all ids of the sessions on which the user is registered
-                IEnumerable<int> lstAllByUser = this.GetAllByUserId(userId).Select(t => t.Id);
+                IEnumerable<int> lstAllTrainingSessionsIds = TrainingSessionRepository.GetAll()
+                    .Where(t => t.Date > DateTime.Now)
+                    .Select(t => t.Id);
+
+                //Get all ids and dates of the sessions on which the user is registered
+                IEnumerable<int> lstAllTrainingSessionsIdsByUser = lstAllByUsers
+                    .Select(t => t.Id);
+
+                IEnumerable<DateTime> lstAllTrainingSessionsDatesByUser = lstAllByUsers
+                    .Select(t => t.Date);
 
                 //Get all ids of the available sessions for the user
-                IEnumerable<int> ids = lstAll.Except(lstAllByUser);
+                IEnumerable<int> ids = lstAllTrainingSessionsIds.Except(lstAllTrainingSessionsIdsByUser);
 
                 //Returns sessions available for the user
-                return TrainingSessionRepository.GetAll().Where(t => ids.Contains(t.Id));
+                var lstAvailableSession = TrainingSessionRepository.GetAll()
+                    .Where(t => ids.Any(i => i == t.Id))
+                    .Where(t => !lstAllTrainingSessionsDatesByUser.Any(d => d == t.Date));
+
+                List<PictureTrainingSessionViewModel> results = new List<PictureTrainingSessionViewModel>();
+
+                //Foreach availableSession add the coorect picture
+                foreach (var item in lstAvailableSession)
+                {
+                    // retrieve the trainingSession
+                    TrainingSession t = TrainingSessionRepository.GetById(item.Id);
+
+                    var pictureTraining = "";
+
+                    if (item.AvailableSeat == 0)
+                    {
+                        pictureTraining  = "unavailable.png";
+                    }
+                    else if (item.AvailableSeat < 3)
+                    {
+                        pictureTraining = "warning.png";
+                    }
+
+                    results.Add(new PictureTrainingSessionViewModel(t, pictureTraining)
+                    {
+                        Id = t.Id,
+                        AvailableSeat = t.AvailableSeat,
+                        Date = t.Date,
+                        PictureTraining = pictureTraining
+                    });
+
+                }
+                return results.OrderByDescending(r => r.Date);
             }
             catch (Exception e)
             {

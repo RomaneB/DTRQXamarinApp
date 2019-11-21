@@ -1,6 +1,7 @@
 ﻿using DTRQXamarinApp.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DTRQXamarinApp.Service
@@ -20,6 +21,25 @@ namespace DTRQXamarinApp.Service
             {
                 using (var db = DatabaseConnection.Connection())
                 {
+                    var tables = new List<string>()
+                    {
+                        nameof(DrivingLesson), 
+                        nameof(Instructor), 
+                        nameof(TrainingSession),
+                        nameof(User), 
+                        nameof(UserTrainingSession)
+                    };
+
+                    /* 
+                     * If a table has at least one column, it means that this table exists.
+                     * We don't check if there are data in these tables because if a user 
+                     * remove everything, it will remove and create everything another time.
+                     */
+                    if (tables.All(t => db.GetTableInfo(t).Any()))
+                    {
+                        return;
+                    }
+
                     //Clear database
                     db.DropTable<DrivingLesson>();
                     db.DropTable<Instructor>();
@@ -36,23 +56,34 @@ namespace DTRQXamarinApp.Service
                     //Init Training Sessions
                     db.InsertAll(new List<TrainingSession>()
                     {
-                    new TrainingSession {Date = new DateTime(2019,10,01,10,00,00), AvailableSeat=0},
+                    new TrainingSession {Date = new DateTime(2019,10,01,10,00,00), AvailableSeat=0},//1
                     new TrainingSession {Date = new DateTime(2019,10,01,8,00,00), AvailableSeat=5},
                     new TrainingSession {Date = new DateTime(2019,09,01,11,00,00), AvailableSeat=10},
                     new TrainingSession {Date = new DateTime(2019,10,29,10,00,00), AvailableSeat=5},
-                    new TrainingSession {Date = new DateTime(2019,11,11,15,00,00), AvailableSeat=2},
+                    new TrainingSession {Date = new DateTime(2020,11,11,15,00,00), AvailableSeat=2},//5
                     new TrainingSession {Date = new DateTime(2019,10,30,16,00,00), AvailableSeat=0},
                     new TrainingSession {Date = new DateTime(2019,10,30,12,00,00), AvailableSeat=5},
                     new TrainingSession {Date = new DateTime(2019,10,12,10,00,00), AvailableSeat=3},
                     new TrainingSession {Date = new DateTime(2019,10,12,12,00,00), AvailableSeat=1},
 
-                    new TrainingSession {Date = new DateTime(2018,12,10,10,00,00), AvailableSeat=3},
+                    new TrainingSession {Date = new DateTime(2020,12,10,10,00,00), AvailableSeat=3},//10
                     new TrainingSession {Date = new DateTime(2019,10,20,08,00,00), AvailableSeat=8},
-                    new TrainingSession {Date = new DateTime(2019,08,15,10,00,00), AvailableSeat=0},
+                    new TrainingSession {Date = new DateTime(2020,08,15,10,00,00), AvailableSeat=0},
                     new TrainingSession {Date = new DateTime(2019,08,15,12,00,00), AvailableSeat=8},
                     new TrainingSession {Date = new DateTime(2020,03,01,15,00,00), AvailableSeat=15},
-                    new TrainingSession {Date = new DateTime(2020,03,01,15,30,00), AvailableSeat=15},
-                    new TrainingSession {Date = new DateTime(2019,12,10,15,00,00), AvailableSeat=15}
+                    new TrainingSession {Date = new DateTime(2020,03,01,15,30,00), AvailableSeat=15},//15
+                    new TrainingSession {Date = new DateTime(2019,12,10,15,00,00), AvailableSeat=15},
+                    new TrainingSession {Date = new DateTime(2020,03,01,15,00,00), AvailableSeat=12},
+
+                    new TrainingSession {Date = new DateTime(2020,03,01,15,00,00), AvailableSeat=0},
+                    new TrainingSession {Date = new DateTime(2020,03,01,15,00,00), AvailableSeat=1},
+                    new TrainingSession {Date = new DateTime(2020,03,01,15,00,00), AvailableSeat=2},
+                    new TrainingSession {Date = new DateTime(2020,03,02,15,30,00), AvailableSeat=0},
+                    new TrainingSession {Date = new DateTime(2020,03,02,15,30,00), AvailableSeat=1},
+                    new TrainingSession {Date = new DateTime(2020,03,03,15,30,00), AvailableSeat=2},
+                    new TrainingSession {Date = new DateTime(2020,03,03,16,00,00), AvailableSeat=0},
+                    new TrainingSession {Date = new DateTime(2020,03,03,16,00,00), AvailableSeat=1},
+                    new TrainingSession {Date = new DateTime(2020,03,07,16,00,00), AvailableSeat=2},
                     });
 
                     //Init User
@@ -65,12 +96,13 @@ namespace DTRQXamarinApp.Service
                     });
 
                     //Init User Training Session
-                    db.Insert(new UserTrainingSession() { TrainingSessionId = 1, UserId = 1 , Result= 3});
-                    db.Insert(new UserTrainingSession() { TrainingSessionId = 5, UserId = 1 , Result= 5});
-                    db.Insert(new UserTrainingSession() { TrainingSessionId = 10, UserId = 1, Result= 9 });
-                    db.Insert(new UserTrainingSession() { TrainingSessionId = 4, UserId = 2, Result= 9 });
-                    db.Insert(new UserTrainingSession() { TrainingSessionId = 13, UserId = 1, Result= 10 });
-                    db.Insert(new UserTrainingSession() { TrainingSessionId = 1, UserId = 3, Result= 6});
+                    db.Insert(new UserTrainingSession() { TrainingSessionId = 1, UserId = 1, Result = 3 });
+                    db.Insert(new UserTrainingSession() { TrainingSessionId = 5, UserId = 1, Result = 5 });
+                    db.Insert(new UserTrainingSession() { TrainingSessionId = 10, UserId = 1, Result = 9 });
+                    db.Insert(new UserTrainingSession() { TrainingSessionId = 4, UserId = 2, Result = 9 });
+                    db.Insert(new UserTrainingSession() { TrainingSessionId = 13, UserId = 1, Result = 10 });
+                    db.Insert(new UserTrainingSession() { TrainingSessionId = 1, UserId = 3, Result = 6 });
+                    db.Insert(new UserTrainingSession() { TrainingSessionId = 16, UserId = 1, Result = 10 });
 
                     //Init Driving Lessons
                     db.Insert(new DrivingLesson() { Comment = "Premiere Lecon", Date = DateTime.Now.AddHours(1).AddMinutes(2), InstructorId = 1 });

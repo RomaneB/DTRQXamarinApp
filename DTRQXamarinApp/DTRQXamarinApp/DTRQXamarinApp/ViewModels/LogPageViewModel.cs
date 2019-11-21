@@ -33,11 +33,12 @@ namespace DTRQXamarinApp.ViewModels
         /// <param name="navigationService"></param>
         /// <param name="ea"></param>
         /// <param name="userService"></param>
-        public LogPageViewModel(INavigationService navigationService, IEventAggregator ea, UserService userService) : base(navigationService, userService)
+        public LogPageViewModel(INavigationService navigationService, IEventAggregator ea, UserService userService, InitDatabaseService databaseService) : base(navigationService, userService, databaseService)
         {
             Title = "LogPage";
             _ea = ea;
             LoginCommand = new DelegateCommand(Login);
+            DatabaseService.InitDatabase();
         }
 
         /// <summary>
