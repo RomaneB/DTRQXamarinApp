@@ -32,12 +32,15 @@ namespace DTRQXamarinApp
         protected override async void OnInitialized()
         {
             InitializeComponent();
+            //If the user is logged in
             if (Application.Current.Properties.ContainsKey("UserId"))
             {
+                // The application opens on the home page
                 await NavigationService.NavigateAsync("NavigationPage/MainPage");
             }
             else
             {
+                // The application opens on the log page
                 await NavigationService.NavigateAsync("NavigationPage/LogPage");
             }
         }

@@ -73,6 +73,7 @@ namespace DTRQXamarinApp.ViewModels.TrainingSessions
 
                         //Event publish to refresh the user's trainings list
                         Event.GetEvent<SentEventUnregister>().Publish(obj.Id);
+                        Event.GetEvent<RefreshAvailableTrainingSessionsListEvent>().Publish();
 
                         await Application.Current.MainPage.DisplayAlert("Confirmation", "Vous êtes désinscrit à la session du : " + obj.Date, "Ok");
                     }

@@ -41,10 +41,11 @@ namespace DTRQXamarinApp.ViewModels
             DrivingLessonService = drivingLessonService;
         }
 
-        public ViewModelBase(INavigationService navigationService, UserService userService)
+        public ViewModelBase(INavigationService navigationService, UserService userService, InitDatabaseService databaseService)
         {
             NavigationService = navigationService;
             UserService = userService;
+            DatabaseService = databaseService;
         }
 
         public ViewModelBase(INavigationService navigationService, InitDatabaseService databaseService)

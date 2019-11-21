@@ -1,4 +1,5 @@
 ﻿using DTRQXamarinApp.Service;
+using Plugin.LocalNotification;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
@@ -16,6 +17,11 @@ namespace DTRQXamarinApp.ViewModels
         public DelegateCommand OpenTrainingSessionCommand { get; set; }
         public DelegateCommand OpenHomeCommand { get; set; }
         public DelegateCommand DeconnexionCommand { get; set; }
+        /// <summary>
+        /// Constructor of the viewModel
+        /// </summary>
+        /// <param name="navigationService"></param>
+        /// <param name="databaseService"></param>
 
         public MainPageViewModel(INavigationService navigationService, InitDatabaseService databaseService )
             : base(navigationService, databaseService)
@@ -39,6 +45,7 @@ namespace DTRQXamarinApp.ViewModels
 
         private void Deconnexion()
         {
+            NotificationCenter.Current.CancelAll();
             NavigationService.NavigateAsync("/LogPage", useModalNavigation: true);
         }
     }
