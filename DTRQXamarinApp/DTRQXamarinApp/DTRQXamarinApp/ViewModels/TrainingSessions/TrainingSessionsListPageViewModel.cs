@@ -43,12 +43,12 @@ namespace DTRQXamarinApp.ViewModels.TrainingSessions
         /// <summary>
         /// Get or set the command executed when the user tries to register a <see cref="TrainingSession"/>.
         /// </summary>
-        public DelegateCommand<TrainingSession> Register { get; set; }
+        public DelegateCommand<PictureTrainingSessionViewModel> Register { get; set; }
 
         /// <summary>
         /// Get or set the collection of <see cref="TrainingSession"/> displayed in this tab.
         /// </summary>
-        public ObservableCollection<TrainingSession> Items { get; set; }       
+        public ObservableCollection<PictureTrainingSessionViewModel> Items { get; set; }        
 
         /// <summary>
         /// Get or set an object which allow to manage events (subscribe/publish).
@@ -65,12 +65,10 @@ namespace DTRQXamarinApp.ViewModels.TrainingSessions
            : base(navigationService, trainingSessionService)
         {
             Title = "Futures sessions";
-            Register = new DelegateCommand<TrainingSession>(SaveRegister);
             SwitchToggle = new DelegateCommand(SwitchToggled);
-
+            Register = new DelegateCommand<PictureTrainingSessionViewModel>(SaveRegister);
             // If we disable it, it will initialize the list with default values.
             this.DisableSwitch(); 
-
             Event = eventAggregator;
             Event.GetEvent<SentEventUnregister>().Subscribe(IdReceived);
             Event.GetEvent<RefreshAvailableTrainingSessionsListEvent>().Subscribe(RefreshAvailableTrainingSessionsList);
@@ -86,11 +84,27 @@ namespace DTRQXamarinApp.ViewModels.TrainingSessions
 
         private void IdReceived(int obj)
         {
-            Items.Add(TrainingSessionService.GetByid(obj));
-            List<TrainingSession> trainingSessions = Items.OrderBy(s => s.Date).ToList();
+            TrainingSession t = TrainingSessionService.GetByid(obj);
+
+            // retrieve the good picture in regards to the available seats
+            var pictureTraining = "";
+            if (t.AvailableSeat == 0)
+            {
+                pictureTraining = "unavailable.png";
+            }
+            else if (t.AvailableSeat < 3)
+            {
+                pictureTraining = "warning.png";
+            }
+
+            PictureTrainingSessionViewModel pictureTrainingSessionViewModels = new PictureTrainingSessionViewModel(t, pictureTraining) { AvailableSeat = t.AvailableSeat , Date = t.Date , Id = t.Id, PictureTraining = pictureTraining };
+            
+            
+            Items.Add(pictureTrainingSessionViewModels);
+            List<PictureTrainingSessionViewModel> trainingSessions = Items.OrderBy(s => s.Date).ToList();
             Items.Clear();
 
-            foreach (TrainingSession item in trainingSessions)
+            foreach (PictureTrainingSessionViewModel item in trainingSessions)
             {
                 Items.Add(item);
             }
@@ -100,7 +114,7 @@ namespace DTRQXamarinApp.ViewModels.TrainingSessions
         /// Register a user to a training Session and publish it to add the training to user's trainings list
         /// </summary>
         /// <param name="obj">The training on which the user would like to register </param>
-        private async void SaveRegister(TrainingSession obj)
+        private async void SaveRegister(PictureTrainingSessionViewModel obj)
         {
             try
             {
@@ -122,9 +136,15 @@ namespace DTRQXamarinApp.ViewModels.TrainingSessions
                     
                     if (add != 0)
                     {
+                        TrainingSession t = new TrainingSession()
+                        {
+                            Id = obj.Id,
+                            AvailableSeat = obj.AvailableSeat,
+                            Date = obj.Date
+                        };
                         //Update the number of available seats
-                        obj.AvailableSeat -= 1;
-                        TrainingSessionService.Update(obj);
+                        t.AvailableSeat -= 1;
+                        TrainingSessionService.Update(t);
 
                         //Remove the session into the available sessions for the user.
                         ObservableCollection<TrainingSession> trainingSessions = new ObservableCollection<TrainingSession>(TrainingSessionService.GetAllByUserId(userId));
@@ -180,7 +200,7 @@ namespace DTRQXamarinApp.ViewModels.TrainingSessions
         /// Get the next available training sessions ordered by date.
         /// </summary>
         /// <returns>A collection of <see cref="TrainingSession"/>.</returns>
-        private IEnumerable<TrainingSession> GetAvailableTrainingSessions()
+        private IEnumerable<PictureTrainingSessionViewModel> GetAvailableTrainingSessions()
         {
             return TrainingSessionService
                 .GetAllAvailable(int.Parse(Application.Current.Properties["UserId"].ToString()))
@@ -191,7 +211,7 @@ namespace DTRQXamarinApp.ViewModels.TrainingSessions
         /// Get the next available training sessions ordered by date with available places only.
         /// </summary>
         /// <returns>A collection of <see cref="TrainingSession"/>.</returns>
-        private IEnumerable<TrainingSession> GetTrainingSessionsWithAvailableSeats()
+        private IEnumerable<PictureTrainingSessionViewModel> GetTrainingSessionsWithAvailableSeats()
         {
             return this.GetAvailableTrainingSessions()
                 .Where(t => t.AvailableSeat > 0);
@@ -207,7 +227,7 @@ namespace DTRQXamarinApp.ViewModels.TrainingSessions
 
             if (this.Items == null)
             {
-                this.Items = new ObservableCollection<TrainingSession>(this.GetAvailableTrainingSessions());
+                this.Items = new ObservableCollection<PictureTrainingSessionViewModel>(this.GetAvailableTrainingSessions());
             }
             else
             {
@@ -226,7 +246,7 @@ namespace DTRQXamarinApp.ViewModels.TrainingSessions
 
             if (this.Items == null)
             {
-                this.Items = new ObservableCollection<TrainingSession>(this.GetTrainingSessionsWithAvailableSeats());
+                this.Items = new ObservableCollection<PictureTrainingSessionViewModel>(this.GetTrainingSessionsWithAvailableSeats());
             }
             else
             {

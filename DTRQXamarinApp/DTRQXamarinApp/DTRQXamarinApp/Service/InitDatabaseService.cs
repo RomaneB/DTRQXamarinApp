@@ -60,15 +60,15 @@ namespace DTRQXamarinApp.Service
                     new TrainingSession {Date = new DateTime(2019,10,01,8,00,00), AvailableSeat=5},
                     new TrainingSession {Date = new DateTime(2019,09,01,11,00,00), AvailableSeat=10},
                     new TrainingSession {Date = new DateTime(2019,10,29,10,00,00), AvailableSeat=5},
-                    new TrainingSession {Date = new DateTime(2019,11,11,15,00,00), AvailableSeat=2},//5
+                    new TrainingSession {Date = new DateTime(2020,11,11,15,00,00), AvailableSeat=2},//5
                     new TrainingSession {Date = new DateTime(2019,10,30,16,00,00), AvailableSeat=0},
                     new TrainingSession {Date = new DateTime(2019,10,30,12,00,00), AvailableSeat=5},
                     new TrainingSession {Date = new DateTime(2019,10,12,10,00,00), AvailableSeat=3},
                     new TrainingSession {Date = new DateTime(2019,10,12,12,00,00), AvailableSeat=1},
 
-                    new TrainingSession {Date = new DateTime(2018,12,10,10,00,00), AvailableSeat=3},//10
+                    new TrainingSession {Date = new DateTime(2020,12,10,10,00,00), AvailableSeat=3},//10
                     new TrainingSession {Date = new DateTime(2019,10,20,08,00,00), AvailableSeat=8},
-                    new TrainingSession {Date = new DateTime(2019,08,15,10,00,00), AvailableSeat=0},
+                    new TrainingSession {Date = new DateTime(2020,08,15,10,00,00), AvailableSeat=0},
                     new TrainingSession {Date = new DateTime(2019,08,15,12,00,00), AvailableSeat=8},
                     new TrainingSession {Date = new DateTime(2020,03,01,15,00,00), AvailableSeat=15},
                     new TrainingSession {Date = new DateTime(2020,03,01,15,30,00), AvailableSeat=15},//15
