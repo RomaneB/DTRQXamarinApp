@@ -1,6 +1,7 @@
 ﻿using DTRQXamarinApp.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DTRQXamarinApp.Service
@@ -20,6 +21,25 @@ namespace DTRQXamarinApp.Service
             {
                 using (var db = DatabaseConnection.Connection())
                 {
+                    var tables = new List<string>()
+                    {
+                        nameof(DrivingLesson), 
+                        nameof(Instructor), 
+                        nameof(TrainingSession),
+                        nameof(User), 
+                        nameof(UserTrainingSession)
+                    };
+
+                    /* 
+                     * If a table has at least one column, it means that this table exists.
+                     * We don't check if there are data in these tables because if a user 
+                     * remove everything, it will remove and create everything another time.
+                     */
+                    if (tables.All(t => db.GetTableInfo(t).Any()))
+                    {
+                        return;
+                    }
+
                     //Clear database
                     db.DropTable<DrivingLesson>();
                     db.DropTable<Instructor>();
@@ -76,11 +96,11 @@ namespace DTRQXamarinApp.Service
                     });
 
                     //Init User Training Session
-                    db.Insert(new UserTrainingSession() { TrainingSessionId = 1, UserId = 1 , Result= 3});
-                    db.Insert(new UserTrainingSession() { TrainingSessionId = 5, UserId = 1 , Result= 5});
-                    db.Insert(new UserTrainingSession() { TrainingSessionId = 10, UserId = 1, Result= 9 });
-                    db.Insert(new UserTrainingSession() { TrainingSessionId = 4, UserId = 2, Result= 9 });
-                    db.Insert(new UserTrainingSession() { TrainingSessionId = 13, UserId = 1, Result= 10 });
+                    db.Insert(new UserTrainingSession() { TrainingSessionId = 1, UserId = 1, Result = 3 });
+                    db.Insert(new UserTrainingSession() { TrainingSessionId = 5, UserId = 1, Result = 5 });
+                    db.Insert(new UserTrainingSession() { TrainingSessionId = 10, UserId = 1, Result = 9 });
+                    db.Insert(new UserTrainingSession() { TrainingSessionId = 4, UserId = 2, Result = 9 });
+                    db.Insert(new UserTrainingSession() { TrainingSessionId = 13, UserId = 1, Result = 10 });
                     db.Insert(new UserTrainingSession() { TrainingSessionId = 1, UserId = 3, Result = 6 });
                     db.Insert(new UserTrainingSession() { TrainingSessionId = 16, UserId = 1, Result = 10 });
 

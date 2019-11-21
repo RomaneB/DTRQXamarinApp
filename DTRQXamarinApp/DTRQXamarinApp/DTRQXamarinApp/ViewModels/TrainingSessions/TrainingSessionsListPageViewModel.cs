@@ -104,7 +104,7 @@ namespace DTRQXamarinApp.ViewModels.TrainingSessions
         {
             try
             {
-                // TODO The user is able to register even if there is 0 available seat...
+                // If there is not a single seat available for this training session, we show an alert.
                 if (obj.AvailableSeat <= 0)
                 {
                     await Application.Current.MainPage.DisplayAlert("Aucune place disponible pour cette session.", "", "OK");
