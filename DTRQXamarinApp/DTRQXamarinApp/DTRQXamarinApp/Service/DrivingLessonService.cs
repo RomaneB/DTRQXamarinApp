@@ -133,7 +133,7 @@ namespace DTRQXamarinApp.Service
                         InstructorFirstName = t.FirstName,
                         InstructorLastName = t.LastName,
                         UserId = d.UserId
-                    }).Where(w => w.UserId == userId && w.DateTime <= DateTime.Now).OrderBy(s => s.DateTime);
+                    }).Where(w => w.UserId == userId && w.DateTime <= DateTime.Now).OrderByDescending(s => s.DateTime);
                 }
             }
             catch (Exception e)
